@@ -1,19 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _raySize;
-    [SerializeField] private Transform _rayOrigin;
-    
-    private Touch _touch;
+    [SerializeField] public float _speed;
 
-    private void OnDrawGizmosSelected()
+    private Tween _moveTween;
+
+    public void Move(Tile tile)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(_rayOrigin.position, _rayOrigin.position + _raySize * transform.forward);
+        _moveTween?.Kill();
+        transform.DOMove(tile.PlayerPosition.position, _speed);
     }
 }
