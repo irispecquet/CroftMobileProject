@@ -296,7 +296,7 @@ PrefabInstance:
     - target: {fileID: 2348896859923645013, guid: 2e0e7f3638529fd4cb21e544818863d2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7062371475348141657, guid: 2e0e7f3638529fd4cb21e544818863d2,
         type: 3}
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3875248bff9342f4db49f9525c7e91fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1
+  _speed: 0.5
 --- !u!4 &833134234
 Transform:
   m_ObjectHideFlags: 0

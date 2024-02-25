@@ -19,17 +19,8 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if(hit.collider.gameObject == PlayerController.gameObject)
-                {
-                    _isDragging = true;
-                    _initialMousePosition = Input.mousePosition;
-                }
-            }
+            _isDragging = true;
+            _initialMousePosition = Input.mousePosition;
         }
         else if (Input.GetMouseButton(0) && _isDragging)
         {
@@ -43,8 +34,8 @@ public class GameManager : MonoBehaviour
             Vector3 finalDirection = ConvertToFourDirections(_dragDirection);
 
             RaycastHit hit;
-            
-            if (Physics.Raycast(_currentTile.transform.position, finalDirection,out hit, _blockSize))
+
+            if (Physics.Raycast(_currentTile.transform.position, finalDirection, out hit, _blockSize))
             {
                 if (hit.collider.gameObject.TryGetComponent(out Tile tile))
                 {
