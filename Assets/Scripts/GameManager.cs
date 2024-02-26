@@ -7,7 +7,13 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private float _blockSize = 1f;
+    [SerializeField] private float _blockSize;
+
+    [Header("Shake")]
+    [SerializeField] private float _effectDuration;
+    [SerializeField] private float _shakeStrength;
+    [SerializeField] private int _shakeVibrato;
+    [SerializeField] private float _shakeRandomness;
 
     private TileController _currentTile;
     private bool _isDragging = false;
@@ -68,9 +74,22 @@ public class GameManager : MonoBehaviour
                         _currentSpot.Move(tile);
                         _currentTile = tile;
                     }
+                    else
+                    {
+                        ShakeSpot();
+                    }
+                }
+                else
+                {
+                    ShakeSpot();
                 }
             }
         }
+    }
+
+    private void ShakeSpot()
+    {
+        _currentSpot.transform.DOShakePosition(_effectDuration, new Vector3(_shakeStrength, 0, 0), _shakeVibrato, _shakeRandomness);
     }
 
     private void OnDrawGizmos()
