@@ -6,6 +6,7 @@ using UnityEngine;
 public class TileController : MonoBehaviour
 {
     [field: SerializeField] public Transform PlayerPositionTransform { get; private set; }
+    public IInteractable Interactable { get; private set; }
     public TileState TileState { get; set; }
     
     [SerializeField] private float _rayDistance;
@@ -28,7 +29,6 @@ public class TileController : MonoBehaviour
                 }
             }
         }
-
         if (_hasAWall)
         {
             Instantiate(GameManager.Instance.TilePrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
@@ -39,6 +39,18 @@ public class TileController : MonoBehaviour
     public bool ContainsTile(TileController tileController)
     {
         return _neighbours.Contains(tileController);
+    }
+
+    public void SetInteractable(IInteractable interactable)
+    {
+        Interactable = interactable;
+        TileState = TileState.HasInteractable;
+    }
+    
+    public void RemoveInteractable()
+    {
+        Interactable = null;
+        TileState = TileState.Occupied;
     }
 
     private void OnDrawGizmosSelected()
@@ -55,5 +67,6 @@ public class TileController : MonoBehaviour
 public enum TileState
 {
     Free,
-    Occupied
+    Occupied,
+    HasInteractable
 }

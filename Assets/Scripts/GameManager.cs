@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    [field:SerializeField] public TileController TilePrefab { get; private set; }
-    
+    [field: SerializeField] public TileController TilePrefab { get; private set; }
+
     [SerializeField] private float _blockSize;
 
     [Header("Shake")]
@@ -25,7 +25,7 @@ public class GameManager : Singleton<GameManager>
     protected override void InternalAwake()
     {
     }
-    
+
     private void Start()
     {
         _mainCamera = Camera.main;
@@ -35,24 +35,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (Input.GetMouseButtonDown(0) && _isDragging == false)
         {
-            _initialMousePosition = Input.mousePosition;
-
-            Ray initRay = _mainCamera.ScreenPointToRay(_initialMousePosition);
-            Physics.Raycast(initRay, out _initialHit);
-
-            if (_initialHit.collider.gameObject.TryGetComponent(out SpotController spot))
-            {
-                if (spot != null)
-                {
-                    if (_currentSpot != spot)
-                    {
-                        _currentSpot = spot;
-                        _currentTile = spot.CurrentTile;
-                    }
-
-                    _isDragging = true;
-                }
-            }
+            InitDrag();
         }
         else if (Input.GetMouseButton(0) && _isDragging)
         {
@@ -60,26 +43,56 @@ public class GameManager : Singleton<GameManager>
         }
         else if (Input.GetMouseButtonUp(0) && _isDragging)
         {
-            _isDragging = false;
+            EndDrag();
+        }
+    }
 
-            Ray rayCurrentMousePos = _mainCamera.ScreenPointToRay(_currentMousePosition);
-            Physics.Raycast(rayCurrentMousePos, out RaycastHit currentHit);
+    private void EndDrag()
+    {
+        _isDragging = false;
 
-            _dragDirection = (currentHit.point - _initialHit.point).normalized;
+        Ray rayCurrentMousePos = _mainCamera.ScreenPointToRay(_currentMousePosition);
+        Physics.Raycast(rayCurrentMousePos, out RaycastHit currentHit);
 
-            if (Physics.Raycast(_currentTile.transform.position, _dragDirection, out RaycastHit hit, _blockSize))
+        _dragDirection = (currentHit.point - _initialHit.point).normalized;
+
+        MoveSpot();
+    }
+
+    private void InitDrag()
+    {
+        _initialMousePosition = Input.mousePosition;
+
+        Ray initRay = _mainCamera.ScreenPointToRay(_initialMousePosition);
+        Physics.Raycast(initRay, out _initialHit);
+
+        if (_initialHit.collider.gameObject.TryGetComponent(out SpotController spot))
+        {
+            if (spot != null)
             {
-                if (hit.collider.gameObject.TryGetComponent(out TileController tile))
+                if (_currentSpot != spot)
                 {
-                    if (_currentTile.ContainsTile(tile) && tile.TileState == TileState.Free)
-                    {
-                        _currentSpot.Move(tile);
-                        _currentTile = tile;
-                    }
-                    else
-                    {
-                        ShakeSpot();
-                    }
+                    _currentSpot = spot;
+                    _currentTile = spot.CurrentTile;
+                }
+
+                _isDragging = true;
+            }
+        }
+    }
+
+    private void MoveSpot()
+    {
+        if (Physics.Raycast(_currentTile.transform.position, _dragDirection, out RaycastHit hit, _blockSize))
+        {
+            if (hit.collider.gameObject.TryGetComponent(out TileController tile))
+            {
+                if (_currentTile.ContainsTile(tile) && tile.TileState == TileState.Free || tile.TileState == TileState.HasInteractable)
+                {
+                    _currentSpot.Move(tile);
+                    _currentTile = tile;
+
+                    Interact(tile);
                 }
                 else
                 {
@@ -89,6 +102,36 @@ public class GameManager : Singleton<GameManager>
             else
             {
                 ShakeSpot();
+            }
+        }
+        else
+        {
+            ShakeSpot();
+        }
+    }
+
+    private void Interact(TileController tile)
+    {
+        if (tile.Interactable != null)
+        {
+            if (Physics.Raycast(_currentSpot.PartnerSpot.CurrentTile.transform.position, _dragDirection, out RaycastHit neighbourHit, _blockSize))
+            {
+                if (neighbourHit.collider.gameObject.TryGetComponent(out TileController newTile))
+                {
+                    if (_currentSpot.PartnerSpot.CurrentTile.ContainsTile(newTile))
+                    {
+                        tile.Interactable.Move(newTile);
+                        newTile.SetInteractable(tile.Interactable);
+
+                        tile.RemoveInteractable();
+                    }
+                }
+            }
+            else
+            {
+                IInteractable interactable = tile.Interactable;
+                tile.RemoveInteractable();
+                interactable.Destroy();
             }
         }
     }

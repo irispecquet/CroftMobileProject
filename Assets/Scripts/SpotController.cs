@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class SpotController : MonoBehaviour
 {
+    [field: SerializeField] public SpotController PartnerSpot { get; private set; }
     public TileController CurrentTile { get; private set; }
 
-    [SerializeField] private SpotController _partnerSpot;
     [SerializeField] private float _speed;
 
     private TileController _startingTile;
@@ -20,7 +20,6 @@ public class SpotController : MonoBehaviour
                 if (tile.TileState == TileState.Free)
                 {
                     _startingTile = tile;
-                    transform.position = tile.PlayerPositionTransform.position;
                 }
                 else
                 {
@@ -36,6 +35,8 @@ public class SpotController : MonoBehaviour
         }
 
         CurrentTile = _startingTile;
+        
+        transform.position = CurrentTile.PlayerPositionTransform.position;
         CurrentTile.TileState = TileState.Occupied;
     }
 
