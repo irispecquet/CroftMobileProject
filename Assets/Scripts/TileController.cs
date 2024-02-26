@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public class TileController : MonoBehaviour
 {
-    [field: SerializeField] public Transform PlayerPosition { get; private set; }
+    [field: SerializeField] public Transform PlayerPositionTransform { get; private set; }
+    public TileState TileState { get; set; }
     
     [SerializeField] private float _rayDistance;
 
-    private List<Tile> _neighbours = new List<Tile>(4);
+    private List<TileController> _neighbours = new List<TileController>(4);
     private Vector3[] _directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
 
     private void Start()
@@ -19,7 +20,7 @@ public class Tile : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, direction, out hit, _rayDistance))
             {
-                if (hit.collider.gameObject.TryGetComponent(out Tile tile))
+                if (hit.collider.gameObject.TryGetComponent(out TileController tile))
                 {
                     _neighbours.Add(tile);
                 }
@@ -27,9 +28,9 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public bool ContainsTile(Tile tile)
+    public bool ContainsTile(TileController tileController)
     {
-        return _neighbours.Contains(tile);
+        return _neighbours.Contains(tileController);
     }
 
     private void OnDrawGizmosSelected()
@@ -41,4 +42,10 @@ public class Tile : MonoBehaviour
             Gizmos.DrawLine(transform.position, transform.position + _rayDistance * direction);
         }
     }
+}
+
+public enum TileState
+{
+    Free,
+    Occupied
 }
