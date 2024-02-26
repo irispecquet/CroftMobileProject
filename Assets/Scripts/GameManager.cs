@@ -1,12 +1,10 @@
-﻿using System;
-using DG.Tweening;
-using UnityEditor;
+﻿using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.Tilemaps;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
+    [field:SerializeField] public TileController TilePrefab { get; private set; }
+    
     [SerializeField] private float _blockSize;
 
     [Header("Shake")]
@@ -24,6 +22,10 @@ public class GameManager : MonoBehaviour
     private RaycastHit _initialHit;
     private SpotController _currentSpot;
 
+    protected override void InternalAwake()
+    {
+    }
+    
     private void Start()
     {
         _mainCamera = Camera.main;
@@ -83,6 +85,10 @@ public class GameManager : MonoBehaviour
                 {
                     ShakeSpot();
                 }
+            }
+            else
+            {
+                ShakeSpot();
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class TileController : MonoBehaviour
@@ -8,6 +9,7 @@ public class TileController : MonoBehaviour
     public TileState TileState { get; set; }
     
     [SerializeField] private float _rayDistance;
+    [SerializeField] private bool _hasAWall;
 
     private List<TileController> _neighbours = new List<TileController>(4);
     private Vector3[] _directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
@@ -25,6 +27,12 @@ public class TileController : MonoBehaviour
                     _neighbours.Add(tile);
                 }
             }
+        }
+
+        if (_hasAWall)
+        {
+            Instantiate(GameManager.Instance.TilePrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
+            TileState = TileState.Occupied;
         }
     }
 

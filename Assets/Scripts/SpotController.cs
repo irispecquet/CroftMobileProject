@@ -1,8 +1,5 @@
-using System;
-using System.Net.Security;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class SpotController : MonoBehaviour
 {
@@ -20,7 +17,16 @@ public class SpotController : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent(out TileController tile))
             {
-                _startingTile = tile;
+                if (tile.TileState == TileState.Free)
+                {
+                    _startingTile = tile;
+                    transform.position = tile.PlayerPositionTransform.position;
+                }
+                else
+                {
+                    Debug.LogError($"The tile {gameObject.name} has already a wall, you can't place your spot here.");
+                    return;
+                }
             }
         }
         else
@@ -28,8 +34,6 @@ public class SpotController : MonoBehaviour
             Debug.LogError("You have to put the spot above a tile.");
             return;
         }
-
-        transform.position = _startingTile.PlayerPositionTransform.position;
 
         CurrentTile = _startingTile;
         CurrentTile.TileState = TileState.Occupied;
