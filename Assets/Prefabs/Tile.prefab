@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PlayerPositionTransform>k__BackingField: {fileID: 3478494363435735948}
   _rayDistance: 1
+  _tilePrefab: {fileID: 4001238664422820587}
 --- !u!33 &6668717742809463037
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -1,10 +1,12 @@
 ﻿using DG.Tweening;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : Singleton<GameManager>
 {
-    [field: SerializeField] public TileController TilePrefab { get; private set; }
-
     [SerializeField] private float _blockSize;
 
     [Header("Shake")]
@@ -23,10 +25,6 @@ public class GameManager : Singleton<GameManager>
     private SpotController _currentSpot;
 
     protected override void InternalAwake()
-    {
-    }
-
-    private void Start()
     {
         _mainCamera = Camera.main;
     }
@@ -136,7 +134,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void ShakeSpot()
+        private void ShakeSpot()
     {
         _currentSpot.transform.DOShakePosition(_effectDuration, new Vector3(_shakeStrength, 0, 0), _shakeVibrato, _shakeRandomness);
     }

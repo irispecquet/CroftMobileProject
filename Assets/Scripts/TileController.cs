@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.Mathematics;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TileController : MonoBehaviour
@@ -10,15 +8,21 @@ public class TileController : MonoBehaviour
     public TileState TileState { get; set; }
     
     [SerializeField] private float _rayDistance;
-    [SerializeField] private bool _hasAWall;
+    [SerializeField] private TileController _tilePrefab;
 
     private List<TileController> _neighbours = new List<TileController>(4);
     private Vector3[] _directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
 
     private void Start()
     {
-        RaycastHit hit;
+        UpdateTile();
+    }
 
+    public void UpdateTile()
+    {
+        _neighbours.Clear();
+        
+        RaycastHit hit;
         foreach (Vector3 direction in _directions)
         {
             if (Physics.Raycast(transform.position, direction, out hit, _rayDistance))
@@ -29,11 +33,13 @@ public class TileController : MonoBehaviour
                 }
             }
         }
-        if (_hasAWall)
-        {
-            Instantiate(GameManager.Instance.TilePrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
-            TileState = TileState.Occupied;
-        }
+    }
+
+    public void AddWallOnTile()
+    {
+        Instantiate(_tilePrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
+        TileState = TileState.Occupied;
+        UpdateTile();
     }
 
     public bool ContainsTile(TileController tileController)

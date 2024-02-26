@@ -13,6 +13,11 @@ public class SpotController : MonoBehaviour
 
     private void Start()
     {
+        UpdateSpot();
+    }
+
+    public void UpdateSpot()
+    {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f))
         {
             if (hit.collider.gameObject.TryGetComponent(out TileController tile))
@@ -20,24 +25,22 @@ public class SpotController : MonoBehaviour
                 if (tile.TileState == TileState.Free)
                 {
                     _startingTile = tile;
+
+                    CurrentTile = _startingTile;
+
+                    transform.position = CurrentTile.PlayerPositionTransform.position;
+                    CurrentTile.TileState = TileState.Occupied;
                 }
                 else
                 {
                     Debug.LogError($"The tile {gameObject.name} has already a wall, you can't place your spot here.");
-                    return;
                 }
             }
         }
         else
         {
             Debug.LogError("You have to put the spot above a tile.");
-            return;
         }
-
-        CurrentTile = _startingTile;
-        
-        transform.position = CurrentTile.PlayerPositionTransform.position;
-        CurrentTile.TileState = TileState.Occupied;
     }
 
     public void Move(TileController tile)
