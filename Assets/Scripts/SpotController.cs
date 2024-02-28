@@ -27,26 +27,23 @@ public class SpotController : MonoBehaviour
                     _startingTile = tile;
 
                     CurrentTile = _startingTile;
+                    CurrentTile.CurrentSpot = this;
 
-                    transform.position = CurrentTile.PlayerPositionTransform.position;
+                    transform.position = CurrentTile.SpotPositionTransform.position;
                     CurrentTile.TileState = TileState.Occupied;
-                }
-                else
-                {
-                    Debug.LogError($"The tile {gameObject.name} has already a wall, you can't place your spot here.");
                 }
             }
         }
         else
         {
-            Debug.LogError("You have to put the spot above a tile.");
+            Debug.LogError($"You have to put the {gameObject.name} above a tile.");
         }
     }
 
     public void Move(TileController tile)
     {
         _moveTween?.Kill();
-        transform.DOMove(tile.PlayerPositionTransform.position, _speed);
+        transform.DOMove(tile.SpotPositionTransform.position, _speed);
 
         CurrentTile.TileState = TileState.Free;
 

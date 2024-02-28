@@ -88,7 +88,11 @@ public class GameManager : Singleton<GameManager>
                 if (_currentTile.ContainsTile(tile) && tile.TileState == TileState.Free || tile.TileState == TileState.HasInteractable)
                 {
                     _currentSpot.Move(tile);
+                    
+                    _currentTile.CurrentSpot = null;
+                    
                     _currentTile = tile;
+                    tile.CurrentSpot = _currentSpot;
 
                     Interact(tile);
                 }
@@ -118,10 +122,16 @@ public class GameManager : Singleton<GameManager>
                 {
                     if (_currentSpot.PartnerSpot.CurrentTile.ContainsTile(newTile))
                     {
-                        tile.Interactable.Move(newTile);
+                        tile.Interactable.Move(_currentSpot.PartnerSpot.transform.position, newTile.SpotPositionTransform.position);
                         newTile.SetInteractable(tile.Interactable);
 
                         tile.RemoveInteractable();
+
+                        if (newTile.CurrentSpot != null)
+                        {
+                            _currentSpot = newTile.CurrentSpot;
+                            Interact(newTile);
+                        }
                     }
                 }
             }

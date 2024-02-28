@@ -1,9 +1,11 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class Reactor : MonoBehaviour, IInteractable
 {
-    private TileController _tile;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _jumpDuration;
     
     private void Start()
     {
@@ -13,11 +15,9 @@ public class Reactor : MonoBehaviour, IInteractable
             {
                 if (tile.TileState == TileState.Free)
                 {
-                    transform.position = tile.PlayerPositionTransform.position;
+                    transform.position = tile.SpotPositionTransform.position;
                     
                     tile.SetInteractable(this);
-                    
-                    _tile = tile;
                 }
                 else
                 {
@@ -36,9 +36,10 @@ public class Reactor : MonoBehaviour, IInteractable
         
     }
 
-    public void Move(TileController newTile)
+    public void Move(Vector3 startPos, Vector3 endPos)
     {
-        transform.position = newTile.PlayerPositionTransform.position;
+        transform.position = startPos;
+        transform.DOJump(endPos, _jumpForce, 1, 0.5f);
     }
 
     public void Destroy()

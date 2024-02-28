@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class TileController : MonoBehaviour
 {
-    [field: SerializeField] public Transform PlayerPositionTransform { get; private set; }
+    [field: SerializeField] public Transform SpotPositionTransform { get; private set; }
+    public SpotController CurrentSpot { get; set; }
     public IInteractable Interactable { get; private set; }
     public TileState TileState { get; set; }
     

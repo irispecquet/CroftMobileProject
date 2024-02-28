@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8376e58d724b2cb32444c4066a2df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _jumpForce: 2
+  _jumpDuration: 0.3
 --- !u!33 &4055060867138483734
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -114,7 +116,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

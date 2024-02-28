@@ -4,6 +4,7 @@ using UnityEngine;
 public interface IInteractable
 {
     void Execute();
-    void Move(TileController newTile);
+
+    void Move(Vector3 startPos, Vector3 endPos);
     void Destroy();
 }

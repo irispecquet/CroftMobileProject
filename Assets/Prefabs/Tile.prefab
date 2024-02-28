@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3478494363435735948}
   m_Layer: 0
-  m_Name: PlayerPosition
+  m_Name: SpotPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1232736479486513956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.551, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -80,7 +80,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1a9eb24ffb450483b57389c75c5ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PlayerPositionTransform>k__BackingField: {fileID: 3478494363435735948}
+  <SpotPositionTransform>k__BackingField: {fileID: 3478494363435735948}
+  <CurrentSpot>k__BackingField: {fileID: 0}
   _rayDistance: 1
   _tilePrefab: {fileID: 4001238664422820587}
 --- !u!33 &6668717742809463037
