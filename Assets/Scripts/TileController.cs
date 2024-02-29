@@ -55,6 +55,7 @@ public class TileController : MonoBehaviour
         TileController wall = Instantiate(_tilePrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
         TileState = TileState.Occupied;
         _wall = wall;
+        wall.UpdateTile();
         UpdateTile();
     }
 
