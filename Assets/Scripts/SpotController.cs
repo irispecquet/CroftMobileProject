@@ -6,6 +6,7 @@ public class SpotController : MonoBehaviour
     [field: SerializeField] public SpotController PartnerSpot { get; private set; }
     public TileController CurrentTile { get; private set; }
 
+    [SerializeField] private SpotType _spotType;
     [SerializeField] private float _speed;
 
     private TileController _startingTile;
@@ -30,7 +31,7 @@ public class SpotController : MonoBehaviour
                     CurrentTile.CurrentSpot = this;
 
                     transform.position = CurrentTile.SpotPositionTransform.position;
-                    CurrentTile.TileState = TileState.Occupied;
+                    CurrentTile.TileState = TileState.HasASpot;
                 }
             }
         }
@@ -48,7 +49,7 @@ public class SpotController : MonoBehaviour
         CurrentTile.TileState = TileState.Free;
 
         CurrentTile = tile;
-        tile.TileState = TileState.Occupied;
+        tile.TileState = TileState.HasASpot;
     }
 
     private void OnDrawGizmosSelected()
@@ -56,4 +57,10 @@ public class SpotController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + 0.5f * Vector3.down);
     }
+}
+
+public enum SpotType
+{
+    Normal,
+    NextLevelTrigger
 }

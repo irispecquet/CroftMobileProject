@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -94,7 +95,7 @@ public class GameManager : Singleton<GameManager>
                     _currentTile = tile;
                     tile.CurrentSpot = _currentSpot;
 
-                    StartCoroutine(Interact(tile));
+                    StartCoroutine(Interact(tile, _dragDirection, false));
                 }
                 else
                 {
@@ -112,29 +113,44 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private IEnumerator Interact(TileController tile)
+    private IEnumerator Interact(TileController tile, Vector3 direction, bool IsARebound)
     {
         IInteractable interactable = tile.Interactable;
-        
+
         if (interactable != null)
         {
-            if (Physics.Raycast(_currentSpot.PartnerSpot.CurrentTile.transform.position, _dragDirection, out RaycastHit neighbourHit, _blockSize))
+            if (Physics.Raycast(_currentSpot.PartnerSpot.CurrentTile.transform.position, direction, out RaycastHit neighbourHit, _blockSize))
             {
                 if (neighbourHit.collider.gameObject.TryGetComponent(out TileController newTile))
                 {
                     if (_currentSpot.PartnerSpot.CurrentTile.ContainsTile(newTile))
                     {
+                        Debug.Log($"Current {tile.gameObject.name} to {newTile.gameObject.name} and is {IsARebound} a rebound");
+                        if (newTile.TileState == TileState.HasAWall)
+                        {
+                            // if (IsARebound)
+                            // {
+                            //     StartCoroutine(Interact(newTile, -direction, false));
+                            //     yield break;
+                            // }
+
+                            StartCoroutine(Interact(tile, -direction, true));
+                            yield break;
+                        }
+
+                        // newTile = newTile.GetHighestWall();
+
                         interactable.Move(_currentSpot.PartnerSpot.transform.position, newTile.SpotPositionTransform.position);
                         newTile.SetInteractable(interactable);
 
                         tile.RemoveInteractable();
 
                         yield return new WaitForSeconds(interactable.GetTweenDuration());
-                        
+
                         if (newTile.CurrentSpot != null)
                         {
                             _currentSpot = newTile.CurrentSpot;
-                            StartCoroutine(Interact(newTile));
+                            StartCoroutine(Interact(newTile, direction, false));
                         }
                     }
                 }

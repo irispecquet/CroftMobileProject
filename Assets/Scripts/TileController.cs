@@ -7,14 +7,13 @@ public class TileController : MonoBehaviour
     public SpotController CurrentSpot { get; set; }
     public IInteractable Interactable { get; private set; }
     public TileState TileState { get; set; }
+    public TileController Wall { get; private set; }
 
     [SerializeField] private float _rayDistance;
     [SerializeField] private TileController _tilePrefab;
 
     private List<TileController> _neighbours = new List<TileController>(4);
     private Vector3[] _directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
-
-    private TileController _wall;
 
     private void Start()
     {
@@ -36,34 +35,44 @@ public class TileController : MonoBehaviour
             }
         }
 
+        if (Wall != null)
+        {
+            return;
+        }
+
         if (Physics.Raycast(transform.position, Vector3.up, out RaycastHit hitUp, _rayDistance))
         {
             if (hitUp.collider.gameObject.TryGetComponent(out TileController tile))
             {
-                _wall = tile;
+                Wall = tile;
+                TileState = TileState.HasAWall;
             }
         }
     }
 
     public void AddWallOnTile()
     {
-        if (TileState != TileState.Free || _wall != null)
+        if (TileState != TileState.Free || Wall != null)
         {
             return;
         }
 
         TileController wall = Instantiate(_tilePrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
-        TileState = TileState.Occupied;
-        _wall = wall;
+
+        Wall = wall;
+        TileState = TileState.HasAWall;
+
         wall.UpdateTile();
         UpdateTile();
     }
 
     public void RemoveWall()
     {
-        if (_wall != null)
+        if (Wall != null)
         {
-            DestroyImmediate(_wall.gameObject);
+            DestroyImmediate(Wall.gameObject);
+            Wall = null;
+            TileState = TileState.Free;
             UpdateTile();
         }
     }
@@ -82,7 +91,18 @@ public class TileController : MonoBehaviour
     public void RemoveInteractable()
     {
         Interactable = null;
-        TileState = TileState.Occupied;
+        TileState = TileState.HasASpot;
+    }
+
+    public TileController GetHighestWall()
+    {
+        if (Wall != null)
+        {
+            Debug.Log($"Tile {gameObject.name} has a wall named {Wall.gameObject.name}");
+            return Wall.GetHighestWall();
+        }
+
+        return this;
     }
 
     private void OnDrawGizmosSelected()
@@ -99,6 +119,7 @@ public class TileController : MonoBehaviour
 public enum TileState
 {
     Free,
-    Occupied,
-    HasInteractable
+    HasASpot,
+    HasInteractable, 
+    HasAWall
 }
