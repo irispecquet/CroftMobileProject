@@ -7,4 +7,5 @@ public interface IInteractable
 
     void Move(Vector3 startPos, Vector3 endPos);
     void Destroy();
+    float GetTweenDuration();
 }

@@ -39,11 +39,16 @@ public class Reactor : MonoBehaviour, IInteractable
     public void Move(Vector3 startPos, Vector3 endPos)
     {
         transform.position = startPos;
-        transform.DOJump(endPos, _jumpForce, 1, 0.5f);
+        transform.DOJump(endPos, _jumpForce, 1, _jumpDuration);
     }
 
     public void Destroy()
     {
         Destroy(gameObject);
+    }
+
+    public float GetTweenDuration()
+    {
+        return _jumpDuration;
     }
 }

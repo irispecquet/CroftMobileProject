@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -9,8 +10,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private float _blockSize;
 
-    [Header("Shake")]
-    [SerializeField] private float _effectDuration;
+    [Header("Shake")] [SerializeField] private float _effectDuration;
     [SerializeField] private float _shakeStrength;
     [SerializeField] private int _shakeVibrato;
     [SerializeField] private float _shakeRandomness;
@@ -88,13 +88,13 @@ public class GameManager : Singleton<GameManager>
                 if (_currentTile.ContainsTile(tile) && tile.TileState == TileState.Free || tile.TileState == TileState.HasInteractable)
                 {
                     _currentSpot.Move(tile);
-                    
+
                     _currentTile.CurrentSpot = null;
-                    
+
                     _currentTile = tile;
                     tile.CurrentSpot = _currentSpot;
 
-                    Interact(tile);
+                    StartCoroutine(Interact(tile));
                 }
                 else
                 {
@@ -112,9 +112,11 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void Interact(TileController tile)
+    private IEnumerator Interact(TileController tile)
     {
-        if (tile.Interactable != null)
+        IInteractable interactable = tile.Interactable;
+        
+        if (interactable != null)
         {
             if (Physics.Raycast(_currentSpot.PartnerSpot.CurrentTile.transform.position, _dragDirection, out RaycastHit neighbourHit, _blockSize))
             {
@@ -122,29 +124,36 @@ public class GameManager : Singleton<GameManager>
                 {
                     if (_currentSpot.PartnerSpot.CurrentTile.ContainsTile(newTile))
                     {
-                        tile.Interactable.Move(_currentSpot.PartnerSpot.transform.position, newTile.SpotPositionTransform.position);
-                        newTile.SetInteractable(tile.Interactable);
+                        interactable.Move(_currentSpot.PartnerSpot.transform.position, newTile.SpotPositionTransform.position);
+                        newTile.SetInteractable(interactable);
 
                         tile.RemoveInteractable();
 
+                        yield return new WaitForSeconds(interactable.GetTweenDuration());
+                        
                         if (newTile.CurrentSpot != null)
                         {
                             _currentSpot = newTile.CurrentSpot;
-                            Interact(newTile);
+                            StartCoroutine(Interact(newTile));
                         }
                     }
                 }
             }
             else
             {
-                IInteractable interactable = tile.Interactable;
-                tile.RemoveInteractable();
-                interactable.Destroy();
+                DestroyInteractable(tile);
             }
         }
     }
 
-        private void ShakeSpot()
+    private static void DestroyInteractable(TileController tile)
+    {
+        IInteractable interactable = tile.Interactable;
+        tile.RemoveInteractable();
+        interactable.Destroy();
+    }
+
+    private void ShakeSpot()
     {
         _currentSpot.transform.DOShakePosition(_effectDuration, new Vector3(_shakeStrength, 0, 0), _shakeVibrato, _shakeRandomness);
     }
