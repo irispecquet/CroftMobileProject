@@ -16,6 +16,14 @@ class TileEditor : Editor
             AssetDatabase.SaveAssets();
         }
         
+        if (GUILayout.Button("Remove Wall"))
+        {
+            tile?.RemoveWall();
+
+            EditorUtility.SetDirty(tile);
+            AssetDatabase.SaveAssets();
+        }
+        
         if (GUILayout.Button("Update Tile"))
         {
             tile?.UpdateTile();

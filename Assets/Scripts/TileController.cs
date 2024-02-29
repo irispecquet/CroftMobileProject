@@ -7,12 +7,14 @@ public class TileController : MonoBehaviour
     public SpotController CurrentSpot { get; set; }
     public IInteractable Interactable { get; private set; }
     public TileState TileState { get; set; }
-    
+
     [SerializeField] private float _rayDistance;
     [SerializeField] private TileController _tilePrefab;
 
     private List<TileController> _neighbours = new List<TileController>(4);
     private Vector3[] _directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
+
+    private TileController _wall;
 
     private void Start()
     {
@@ -22,11 +24,10 @@ public class TileController : MonoBehaviour
     public void UpdateTile()
     {
         _neighbours.Clear();
-        
-        RaycastHit hit;
+
         foreach (Vector3 direction in _directions)
         {
-            if (Physics.Raycast(transform.position, direction, out hit, _rayDistance))
+            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, _rayDistance))
             {
                 if (hit.collider.gameObject.TryGetComponent(out TileController tile))
                 {
@@ -34,13 +35,36 @@ public class TileController : MonoBehaviour
                 }
             }
         }
+
+        if (Physics.Raycast(transform.position, Vector3.up, out RaycastHit hitUp, _rayDistance))
+        {
+            if (hitUp.collider.gameObject.TryGetComponent(out TileController tile))
+            {
+                _wall = tile;
+            }
+        }
     }
 
     public void AddWallOnTile()
     {
-        Instantiate(_tilePrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
+        if (TileState != TileState.Free || _wall != null)
+        {
+            return;
+        }
+
+        TileController wall = Instantiate(_tilePrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
         TileState = TileState.Occupied;
+        _wall = wall;
         UpdateTile();
+    }
+
+    public void RemoveWall()
+    {
+        if (_wall != null)
+        {
+            DestroyImmediate(_wall.gameObject);
+            UpdateTile();
+        }
     }
 
     public bool ContainsTile(TileController tileController)
@@ -53,7 +77,7 @@ public class TileController : MonoBehaviour
         Interactable = interactable;
         TileState = TileState.HasInteractable;
     }
-    
+
     public void RemoveInteractable()
     {
         Interactable = null;
