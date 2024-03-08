@@ -136,10 +136,14 @@ public class GameplayManager : Singleton<GameplayManager>
                     StartCoroutine(WaitToMoveInteractable(_currentSpot.PartnerSpot, tile, newTile, interactable, direction));
                 }
             }
+            else
+            {
+                DestroyInteractable(tile, direction);
+            }
         }
         else
         {
-            DestroyInteractable(tile);
+            DestroyInteractable(tile, direction);
         }
     }
 
@@ -158,12 +162,12 @@ public class GameplayManager : Singleton<GameplayManager>
                 }
                 else
                 {
-                    DestroyInteractable(tile);
+                    DestroyInteractable(tile, direction);
                 }
             }
             else
             {
-                DestroyInteractable(tile);
+                DestroyInteractable(tile, direction);
             }
 
             return true;
@@ -189,11 +193,15 @@ public class GameplayManager : Singleton<GameplayManager>
         _currentTile = tile;
     }
 
-    private static void DestroyInteractable(TileController tile)
+    private void DestroyInteractable(TileController tile, Vector3 direction)
     {
         IInteractable interactable = tile.Interactable;
+
+        Vector3 position = _currentSpot.PartnerSpot.transform.position;
+        interactable?.Move(position, position + direction * _blockSize);
+
         tile.RemoveInteractable();
-        interactable.Destroy();
+        interactable?.Destroy();
     }
 
     private void ShakeSpot()

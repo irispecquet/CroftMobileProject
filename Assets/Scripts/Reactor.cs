@@ -6,9 +6,12 @@ public class Reactor : MonoBehaviour, IInteractable
 {
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _jumpDuration;
+    [SerializeField] private Rigidbody _rigidbody;
     
     private void Start()
     {
+        _rigidbody.isKinematic = true;
+        
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f))
         {
             if (hit.collider.gameObject.TryGetComponent(out TileController tile))
@@ -44,7 +47,8 @@ public class Reactor : MonoBehaviour, IInteractable
 
     public void Destroy()
     {
-        Destroy(gameObject);
+        _rigidbody.isKinematic = false;
+        Destroy(gameObject, 5);
     }
 
     public float GetTweenDuration()
