@@ -1,13 +1,9 @@
 ﻿using System.Collections;
 using DG.Tweening;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
-public class GameManager : Singleton<GameManager>
+public class GameplayManager : Singleton<GameplayManager>
 {
     [SerializeField] private float _blockSize;
 
@@ -95,7 +91,7 @@ public class GameManager : Singleton<GameManager>
                     _currentTile = tile;
                     tile.CurrentSpot = _currentSpot;
 
-                    StartCoroutine(Interact(tile, _dragDirection, false));
+                    StartCoroutine(Interact(tile, tile.Interactable, _dragDirection, false));
                 }
                 else
                 {
@@ -113,53 +109,84 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private IEnumerator Interact(TileController tile, Vector3 direction, bool IsARebound)
+    private IEnumerator Interact(TileController tile, IInteractable interactable, Vector3 direction, bool IsARebound)
     {
-        IInteractable interactable = tile.Interactable;
-
-        if (interactable != null)
+        if (interactable == null && IsARebound == false)
         {
-            if (Physics.Raycast(_currentSpot.PartnerSpot.CurrentTile.transform.position, direction, out RaycastHit neighbourHit, _blockSize))
+            yield break;
+        }
+
+        if (Physics.Raycast(_currentSpot.PartnerSpot.CurrentTile.transform.position, direction, out RaycastHit neighbourHit, _blockSize))
+        {
+            if (neighbourHit.collider.gameObject.TryGetComponent(out TileController newTile))
             {
-                if (neighbourHit.collider.gameObject.TryGetComponent(out TileController newTile))
+                if (_currentSpot.PartnerSpot.CurrentTile.ContainsTile(newTile))
                 {
-                    if (_currentSpot.PartnerSpot.CurrentTile.ContainsTile(newTile))
+                    if (newTile.TileState == TileState.HasAWall && IsARebound == false)
                     {
-                        Debug.Log($"Current {tile.gameObject.name} to {newTile.gameObject.name} and is {IsARebound} a rebound");
-                        if (newTile.TileState == TileState.HasAWall)
-                        {
-                            // if (IsARebound)
-                            // {
-                            //     StartCoroutine(Interact(newTile, -direction, false));
-                            //     yield break;
-                            // }
-
-                            StartCoroutine(Interact(tile, -direction, true));
-                            yield break;
-                        }
-
-                        // newTile = newTile.GetHighestWall();
-
-                        interactable.Move(_currentSpot.PartnerSpot.transform.position, newTile.SpotPositionTransform.position);
-                        newTile.SetInteractable(interactable);
-
-                        tile.RemoveInteractable();
-
-                        yield return new WaitForSeconds(interactable.GetTweenDuration());
-
-                        if (newTile.CurrentSpot != null)
-                        {
-                            _currentSpot = newTile.CurrentSpot;
-                            StartCoroutine(Interact(newTile, direction, false));
-                        }
+                        StartCoroutine(Interact(tile, tile.Interactable, -direction, true));
+                        yield break;
                     }
+
+                    if (IsAFakeRebound(tile, interactable, direction, IsARebound, newTile))
+                    {
+                        yield break;
+                    }
+
+                    StartCoroutine(WaitToMoveInteractable(_currentSpot.PartnerSpot, tile, newTile, interactable, direction));
+                }
+            }
+        }
+        else
+        {
+            DestroyInteractable(tile);
+        }
+    }
+
+    private bool IsAFakeRebound(TileController tile, IInteractable interactable, Vector3 direction, bool IsARebound, TileController newTile)
+    {
+        if (newTile.TileState == TileState.HasAWall && IsARebound)
+        {
+            if (Physics.Raycast(_currentSpot.CurrentTile.transform.position, -direction, out RaycastHit reboundHit, _blockSize))
+            {
+                if (reboundHit.collider.gameObject.TryGetComponent(out TileController fakeTile))
+                {
+                    if (_currentSpot.CurrentTile.ContainsTile(fakeTile))
+                    {
+                        StartCoroutine(WaitToMoveInteractable(_currentSpot, tile, fakeTile, interactable, -direction));
+                    }
+                }
+                else
+                {
+                    DestroyInteractable(tile);
                 }
             }
             else
             {
                 DestroyInteractable(tile);
             }
+
+            return true;
         }
+
+        return false;
+    }
+
+    private IEnumerator WaitToMoveInteractable(SpotController spot, TileController tile, TileController newTile, IInteractable interactable, Vector3 direction)
+    {
+        interactable?.Move(spot.transform.position, newTile.SpotPositionTransform.position);
+        newTile.SetInteractable(interactable);
+        tile.RemoveInteractable();
+
+        yield return new WaitForSeconds(interactable.GetTweenDuration());
+
+        if (newTile.CurrentSpot != null)
+        {
+            _currentSpot = newTile.CurrentSpot;
+            StartCoroutine(Interact(newTile, newTile.Interactable, direction, false));
+        }
+
+        _currentTile = tile;
     }
 
     private static void DestroyInteractable(TileController tile)

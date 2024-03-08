@@ -81,7 +81,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <SpotPositionTransform>k__BackingField: {fileID: 3478494363435735948}
-  <CurrentSpot>k__BackingField: {fileID: 0}
   _rayDistance: 1
   _tilePrefab: {fileID: 4001238664422820587}
 --- !u!33 &6668717742809463037
