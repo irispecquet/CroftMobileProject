@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public interface IInteractable
@@ -6,6 +7,6 @@ public interface IInteractable
     void Execute();
 
     void Move(Vector3 startPos, Vector3 endPos);
-    void Destroy();
+    IEnumerator Destroy();
     float GetTweenDuration();
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -7,11 +8,19 @@ public class Reactor : MonoBehaviour, IInteractable
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _jumpDuration;
     [SerializeField] private Rigidbody _rigidbody;
+
+    private bool _isFalling;
+    private bool _isOnTile;
     
     private void Start()
     {
         _rigidbody.isKinematic = true;
-        
+
+        SetReactorOnTile();
+    }
+
+    private void SetReactorOnTile()
+    {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f))
         {
             if (hit.collider.gameObject.TryGetComponent(out TileController tile))
@@ -19,18 +28,21 @@ public class Reactor : MonoBehaviour, IInteractable
                 if (tile.TileState == TileState.Free)
                 {
                     transform.position = tile.SpotPositionTransform.position;
-                    
+
                     tile.SetInteractable(this);
-                }
-                else
-                {
-                    Debug.LogError($"The tile {gameObject.name} has already a wall, you can't place your object here.");
+                    
+                    _isOnTile = true;
+                    _isFalling = false;
                 }
             }
         }
-        else
+    }
+
+    private void Update()
+    {
+        if (_isFalling)
         {
-            Debug.LogError("You have to put the object above a tile.");
+            SetReactorOnTile();
         }
     }
 
@@ -45,10 +57,21 @@ public class Reactor : MonoBehaviour, IInteractable
         transform.DOJump(endPos, _jumpForce, 1, _jumpDuration);
     }
 
-    public void Destroy()
+    public IEnumerator Destroy()
     {
+        _isOnTile = false;
+        
+        yield return new WaitForSeconds(_jumpDuration);
+
         _rigidbody.isKinematic = false;
-        Destroy(gameObject, 5);
+        _isFalling = true;
+        
+        yield return new WaitForSeconds(5);
+
+        if (_isOnTile == false)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public float GetTweenDuration()

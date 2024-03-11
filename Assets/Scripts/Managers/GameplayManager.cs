@@ -7,7 +7,8 @@ public class GameplayManager : Singleton<GameplayManager>
 {
     public TileController CurrentTile { get; set; }
     public SpotController CurrentSpot { get; set; }
-    
+    public float BlockSize => _blockSize;
+
     [SerializeField] private FeedbackManager _feedbackManager;
     [SerializeField] private float _blockSize;
 
@@ -116,10 +117,10 @@ public class GameplayManager : Singleton<GameplayManager>
         IInteractable interactable = tile.Interactable;
 
         Vector3 position = CurrentSpot.PartnerSpot.transform.position;
-        interactable?.Move(position, position + direction * _blockSize);
+        interactable?.Move(position, position + direction * BlockSize);
 
         tile.RemoveInteractable();
-        interactable?.Destroy();
+        StartCoroutine(interactable.Destroy());
     }
     
 
