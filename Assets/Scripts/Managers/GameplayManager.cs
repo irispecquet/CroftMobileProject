@@ -44,7 +44,7 @@ public class GameplayManager : Singleton<GameplayManager>
         }
     }
 
-    private IEnumerator Interact(TileController tile, IInteractable interactable, Vector3 direction, bool IsARebound)
+    private IEnumerator Interact(TileController tile, Interactable interactable, Vector3 direction, bool IsARebound)
     {
         if (interactable == null && IsARebound == false)
         {
@@ -74,7 +74,7 @@ public class GameplayManager : Singleton<GameplayManager>
         }
     }
 
-    private bool IsAFakeRebound(TileController tile, IInteractable interactable, Vector3 direction, bool IsARebound, TileController newTile)
+    private bool IsAFakeRebound(TileController tile, Interactable interactable, Vector3 direction, bool IsARebound, TileController newTile)
     {
         if (newTile.TileState == TileState.HasAWall && IsARebound)
         {
@@ -95,7 +95,7 @@ public class GameplayManager : Singleton<GameplayManager>
         return false;
     }
 
-    private IEnumerator WaitToMoveInteractable(SpotController spot, TileController tile, TileController newTile, IInteractable interactable, Vector3 direction)
+    private IEnumerator WaitToMoveInteractable(SpotController spot, TileController tile, TileController newTile, Interactable interactable, Vector3 direction)
     {
         interactable?.Move(spot.transform.position, newTile.SpotPositionTransform.position);
         newTile.SetInteractable(interactable);
@@ -114,10 +114,10 @@ public class GameplayManager : Singleton<GameplayManager>
 
     private void DestroyInteractable(TileController tile, Vector3 direction)
     {
-        IInteractable interactable = tile.Interactable;
+        Interactable interactable = tile.Interactable;
 
         Vector3 position = CurrentSpot.PartnerSpot.transform.position;
-        interactable?.Move(position, position + direction * BlockSize);
+        interactable.Move(position, position + direction * BlockSize);
 
         tile.RemoveInteractable();
         StartCoroutine(interactable.Destroy());

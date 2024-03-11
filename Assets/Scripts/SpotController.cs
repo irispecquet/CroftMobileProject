@@ -19,7 +19,7 @@ public class SpotController : MonoBehaviour
 
     public void UpdateSpot()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f))
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GameplayManager.Instance.BlockSize / 2))
         {
             if (hit.collider.gameObject.TryGetComponent(out TileController tile))
             {

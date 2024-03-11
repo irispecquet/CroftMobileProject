@@ -66,6 +66,6 @@ public class PlayerController : MonoBehaviour
         float absX = Mathf.Abs(direction.x);
         float absZ = Mathf.Abs(direction.z);
         
-        return new Vector3(absX > absZ ? Mathf.Round(direction.x) : 0, 0, absZ > absX ? Mathf.Round(direction.z) : 0);
+        return new Vector3(absX >= absZ ? Mathf.Round(direction.x) : 0, 0, absZ > absX ? Mathf.Round(direction.z) : 0);
     }
 }

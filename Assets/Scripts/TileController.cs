@@ -5,7 +5,7 @@ public class TileController : MonoBehaviour
 {
     [field: SerializeField] public Transform SpotPositionTransform { get; private set; }
     public SpotController CurrentSpot { get; set; }
-    public IInteractable Interactable { get; private set; }
+    public Interactable Interactable { get; private set; }
     public TileState TileState { get; set; }
     public TileController Wall { get; private set; }
 
@@ -82,7 +82,7 @@ public class TileController : MonoBehaviour
         return _neighbours.ContainsKey(direction) == false ? null : _neighbours[direction];
     }
 
-    public void SetInteractable(IInteractable interactable)
+    public void SetInteractable(Interactable interactable)
     {
         Interactable = interactable;
         TileState = TileState.HasInteractable;
