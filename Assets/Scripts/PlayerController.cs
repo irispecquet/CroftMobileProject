@@ -56,8 +56,16 @@ public class PlayerController : MonoBehaviour
         Physics.Raycast(rayCurrentMousePos, out RaycastHit currentHit);
 
         _dragDirection = (currentHit.point - _initialHit.point).normalized;
-        _dragDirection = new Vector3(Mathf.Round(_dragDirection.x), 0, Mathf.Round(_dragDirection.z));
+        _dragDirection = ConvertToFourDirection(_dragDirection);
 
         _gameplayManager.MoveSpot(_dragDirection);
+    }
+
+    private Vector3 ConvertToFourDirection(Vector3 direction)
+    {
+        float absX = Mathf.Abs(direction.x);
+        float absZ = Mathf.Abs(direction.z);
+        
+        return new Vector3(absX > absZ ? Mathf.Round(direction.x) : 0, 0, absZ > absX ? Mathf.Round(direction.z) : 0);
     }
 }
