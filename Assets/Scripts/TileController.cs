@@ -12,7 +12,7 @@ public class TileController : MonoBehaviour
     [SerializeField] private float _rayDistance;
     [SerializeField] private TileController _tilePrefab;
 
-    private List<TileController> _neighbours = new List<TileController>(4);
+    private Dictionary<Vector3, TileController> _neighbours = new Dictionary<Vector3, TileController>(4);
     private Vector3[] _directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
 
     private void Start()
@@ -30,7 +30,7 @@ public class TileController : MonoBehaviour
             {
                 if (hit.collider.gameObject.TryGetComponent(out TileController tile))
                 {
-                    _neighbours.Add(tile);
+                    _neighbours.Add(direction, tile);
                 }
             }
         }
@@ -77,9 +77,9 @@ public class TileController : MonoBehaviour
         }
     }
 
-    public bool ContainsTile(TileController tileController)
+    public TileController GetNeighbour(Vector3 direction)
     {
-        return _neighbours.Contains(tileController);
+        return _neighbours.ContainsKey(direction) == false ? null : _neighbours[direction];
     }
 
     public void SetInteractable(IInteractable interactable)
@@ -120,6 +120,6 @@ public enum TileState
 {
     Free,
     HasASpot,
-    HasInteractable, 
+    HasInteractable,
     HasAWall
 }
