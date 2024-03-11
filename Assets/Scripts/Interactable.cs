@@ -11,16 +11,14 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] private Transform _rayStart;
     [SerializeField] private Rigidbody _rigidbody;
 
-    private bool _isGoingToBreak;
-    private bool _isFalling;
+    protected bool _isGoingToBreak;
+    protected bool _isFalling;
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawLine(_rayStart.position, _rayStart.position + _testgizmo * Vector3.down);
     }
-
-    public abstract void Execute();
 
     private void Start()
     {
@@ -29,7 +27,7 @@ public abstract class Interactable : MonoBehaviour
         SetInteractableOnTile();
     }
 
-    private void SetInteractableOnTile()
+    protected void SetInteractableOnTile()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GameplayManager.Instance.BlockSize / 2))
         {
@@ -76,20 +74,6 @@ public abstract class Interactable : MonoBehaviour
         {
             yield return new WaitForSeconds(5);
             Destroy(gameObject);
-        }
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (_isGoingToBreak)
-        {
-            Destroy(gameObject);
-        }
-
-        if (_isGoingToBreak == false && _isFalling)
-        {
-            SetInteractableOnTile();
-            _isFalling = false;
         }
     }
 
