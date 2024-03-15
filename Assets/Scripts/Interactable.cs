@@ -14,6 +14,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] private Transform _rayStart;
     [SerializeField] private float _rayFallDistance;
     [SerializeField] private float _maxFallDistance;
+    [SerializeField] private float _maxTimerBeforeDestroy;
 
     [Space(10), Header("References")]
     [SerializeField] private Rigidbody _rigidbody;
@@ -21,6 +22,8 @@ public abstract class Interactable : MonoBehaviour
 
     protected bool _isGoingToBreak;
     protected bool _isFalling;
+
+    private float _timer;
 
     private void OnDrawGizmos()
     {
@@ -33,6 +36,23 @@ public abstract class Interactable : MonoBehaviour
         _rigidbody.isKinematic = true;
 
         SetInteractableOnTile();
+    }
+
+    private void Update()
+    {
+        if (_isFalling)
+        {
+            _timer += Time.deltaTime;
+
+            if (_timer > _maxTimerBeforeDestroy)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            _timer = 0;
+        }
     }
 
     protected void SetInteractableOnTile()

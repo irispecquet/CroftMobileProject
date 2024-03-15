@@ -84,7 +84,8 @@ MonoBehaviour:
   _jumpDuration: 0.3
   _rayStart: {fileID: 4403350727382316362}
   _rayFallDistance: 15
-  _maxFallDistance: 0
+  _maxFallDistance: 3
+  _maxTimerBeforeDestroy: 4
   _rigidbody: {fileID: 7143879764746920073}
   _tileLayer:
     serializedVersion: 2
