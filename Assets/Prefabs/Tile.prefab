@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3478494363435735948}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpotPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 6668717742809463037}
   - component: {fileID: 4574385390134506322}
   - component: {fileID: 6838404775771204671}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 7748829730413751432}
   - component: {fileID: 8454996960670744041}
   - component: {fileID: 5773036044230766421}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

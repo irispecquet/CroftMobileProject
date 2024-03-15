@@ -1,15 +1,23 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Managers;
 using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
+    [Header("Jump")]
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _jumpDuration;
-    [SerializeField] private float _testgizmo;
+
+    [Header("Fall")]
     [SerializeField] private Transform _rayStart;
+    [SerializeField] private float _rayFallDistance;
+    [SerializeField] private float _maxFallDistance;
+
+    [Space(10), Header("References")]
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private LayerMask _tileLayer;
 
     protected bool _isGoingToBreak;
     protected bool _isFalling;
@@ -17,7 +25,7 @@ public abstract class Interactable : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(_rayStart.position, _rayStart.position + _testgizmo * Vector3.down);
+        Gizmos.DrawLine(_rayStart.position, _rayStart.position + _rayFallDistance * Vector3.down);
     }
 
     private void Start()
@@ -29,7 +37,7 @@ public abstract class Interactable : MonoBehaviour
 
     protected void SetInteractableOnTile()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GameplayManager.Instance.BlockSize / 2))
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GameplayManager.Instance.BlockSize / 2, _tileLayer))
         {
             if (hit.collider.gameObject.TryGetComponent(out TileController tile))
             {
@@ -39,17 +47,24 @@ public abstract class Interactable : MonoBehaviour
 
                     tile.SetInteractable(this);
                 }
+                else if (tile.TileState == TileState.HasASpot)
+                {
+                    GameplayManager.Instance.CurrentSpot = tile.CurrentSpot;
+                    tile.SetInteractable(this);
+
+                    StartCoroutine(GameplayManager.Instance.Interact(tile.CurrentSpot.CurrentTile, this, GameplayManager.Instance.LastDragPos, false));
+                }
             }
         }
     }
 
     private bool IsDetectingTile()
     {
-        if (Physics.Raycast(_rayStart.position, Vector3.down, out RaycastHit hit, _testgizmo))
+        if (Physics.Raycast(_rayStart.position, Vector3.down, out RaycastHit hit, _rayFallDistance, _tileLayer))
         {
             if (hit.collider.gameObject.TryGetComponent(out TileController tile))
             {
-                return true;
+                return hit.distance < _maxFallDistance || tile.TileState == TileState.HasASpot;
             }
         }
 
@@ -69,12 +84,6 @@ public abstract class Interactable : MonoBehaviour
         _isGoingToBreak = !IsDetectingTile();
         _isFalling = true;
         _rigidbody.isKinematic = false;
-
-        if (_isFalling)
-        {
-            yield return new WaitForSeconds(5);
-            Destroy(gameObject);
-        }
     }
 
     public float GetTweenDuration()

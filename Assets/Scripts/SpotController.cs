@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Managers;
 using UnityEngine;
 
 public class SpotController : MonoBehaviour
@@ -17,7 +18,7 @@ public class SpotController : MonoBehaviour
         UpdateSpot();
     }
 
-    public void UpdateSpot()
+    private void UpdateSpot()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GameplayManager.Instance.BlockSize / 2))
         {
