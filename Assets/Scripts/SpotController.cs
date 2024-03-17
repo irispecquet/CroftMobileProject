@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SpotController : MonoBehaviour
 {
+    [field: SerializeField] public SpotType Type { get; private set; }
     [field: SerializeField] public SpotController PartnerSpot { get; private set; }
     public TileController CurrentTile { get; private set; }
 
-    [SerializeField] private SpotType _spotType;
     [SerializeField] private float _speed;
 
     private TileController _startingTile;

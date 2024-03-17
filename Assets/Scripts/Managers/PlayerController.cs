@@ -7,22 +7,30 @@ namespace Managers
         [SerializeField] private GameplayManager _gameplayManager;
 
         private bool _isDragging = false;
-        private Vector3 _initialMousePosition;
+        private Vector3 _initialTouchPosition;
         private Vector3 _dragDirection;
         private Vector3 _currentMousePosition;
         private RaycastHit _initialHit;
+        private Touch _currentTouch;
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0) && _isDragging == false)
+            if (Input.touchCount == 0)
+            {
+                return;
+            }
+
+            _currentTouch = Input.GetTouch(0);
+            
+            if (_currentTouch.phase == TouchPhase.Began && _isDragging == false)
             {
                 InitDrag();
             }
-            else if (Input.GetMouseButton(0) && _isDragging)
+            else if (_currentTouch.phase == TouchPhase.Moved && _isDragging)
             {
                 _currentMousePosition = Input.mousePosition;
             }
-            else if (Input.GetMouseButtonUp(0) && _isDragging)
+            else if (_currentTouch.phase == TouchPhase.Ended && _isDragging)
             {
                 EndDrag();
             }
@@ -30,15 +38,20 @@ namespace Managers
 
         private void InitDrag()
         {
-            _initialMousePosition = Input.mousePosition;
+            _initialTouchPosition = _currentTouch.position;
 
-            Ray initRay = Camera.main.ScreenPointToRay(_initialMousePosition);
+            Ray initRay = Camera.main.ScreenPointToRay(_initialTouchPosition);
             Physics.Raycast(initRay, out _initialHit);
 
             if (_initialHit.collider.gameObject.TryGetComponent(out SpotController spot))
             {
                 if (spot != null)
                 {
+                    if (spot.Type == SpotType.NextLevelTrigger)
+                    {
+                        return;
+                    }
+                    
                     if (_gameplayManager.CurrentSpot != spot)
                     {
                         _gameplayManager.CurrentSpot = spot;
@@ -67,7 +80,7 @@ namespace Managers
         {
             float absX = Mathf.Abs(direction.x);
             float absZ = Mathf.Abs(direction.z);
-        
+
             return new Vector3(absX >= absZ ? Mathf.Round(direction.x) : 0, 0, absZ > absX ? Mathf.Round(direction.z) : 0);
         }
     }

@@ -85,6 +85,12 @@ namespace Interactables
         {
             if (tile.TileState == TileState.HasASpot)
             {
+                if (tile.CurrentSpot.Type == SpotType.NextLevelTrigger)
+                {
+                    GameplayManager.Instance.GoToNextScene(); 
+                    return;
+                }
+                
                 GameplayManager.Instance.CurrentSpot = tile.CurrentSpot;
 
                 tile.SetInteractable(this);
@@ -99,8 +105,6 @@ namespace Interactables
             {
                 if (tile.Interactable.Type == InteractableType.Pouffe)
                 {
-                    Debug.Log("There is a pouffe");
-
                     TileController newTile = tile.GetNeighbour(GameplayManager.Instance.LastDragPos);
 
                     if (newTile != null)

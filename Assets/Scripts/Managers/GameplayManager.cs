@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Interactables;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -17,7 +18,7 @@ namespace Managers
         protected override void InternalAwake()
         {
         }
-    
+
         public void MoveSpot(Vector3 direction)
         {
             TileController newTile = CurrentTile.GetNeighbour(direction);
@@ -52,10 +53,10 @@ namespace Managers
             {
                 yield break;
             }
-        
+
             TileController newTile = CurrentSpot.PartnerSpot.CurrentTile.GetNeighbour(direction);
             LastDragPos = direction;
-            
+
             if (newTile != null)
             {
                 if (newTile.TileState == TileState.HasAWall && IsARebound == false)
@@ -68,7 +69,7 @@ namespace Managers
                 {
                     yield break;
                 }
-
+                
                 StartCoroutine(WaitToMoveInteractable(CurrentSpot.PartnerSpot, tile, newTile, interactable, direction));
             }
             else
@@ -101,11 +102,11 @@ namespace Managers
         private IEnumerator WaitToMoveInteractable(SpotController spot, TileController tile, TileController newTile, Interactable interactable, Vector3 direction)
         {
             interactable?.Move(spot.transform.position, newTile.SpotPositionTransform.position);
-            
+
             yield return new WaitForSeconds(interactable.GetTweenDuration());
-            
+
             interactable.SetInteractableOnTile();
-            
+
             tile.RemoveInteractable();
         }
 
@@ -119,7 +120,12 @@ namespace Managers
             tile.RemoveInteractable();
             StartCoroutine(interactable.Fall());
         }
-    
+
+        public void GoToNextScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
