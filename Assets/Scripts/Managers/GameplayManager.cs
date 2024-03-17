@@ -101,18 +101,12 @@ namespace Managers
         private IEnumerator WaitToMoveInteractable(SpotController spot, TileController tile, TileController newTile, Interactable interactable, Vector3 direction)
         {
             interactable?.Move(spot.transform.position, newTile.SpotPositionTransform.position);
-            newTile.SetInteractable(interactable);
-            tile.RemoveInteractable();
-
+            
             yield return new WaitForSeconds(interactable.GetTweenDuration());
-
-            if (newTile.CurrentSpot != null)
-            {
-                CurrentSpot = newTile.CurrentSpot;
-                StartCoroutine(Interact(newTile, newTile.Interactable, direction, false));
-            }
-
-            CurrentTile = tile;
+            
+            interactable.SetInteractableOnTile();
+            
+            tile.RemoveInteractable();
         }
 
         private void DestroyInteractable(TileController tile, Vector3 direction)
@@ -123,7 +117,7 @@ namespace Managers
             interactable.Move(position, position + direction * BlockSize);
 
             tile.RemoveInteractable();
-            StartCoroutine(interactable.Destroy());
+            StartCoroutine(interactable.Fall());
         }
     
         private void OnDrawGizmos()

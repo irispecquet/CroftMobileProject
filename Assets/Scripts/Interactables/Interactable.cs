@@ -7,20 +7,19 @@ namespace Interactables
 {
     public abstract class Interactable : MonoBehaviour
     {
-        [SerializeField] private InteractableType _interactableType;
-    
-        [Header("Jump")]
-        [SerializeField] private float _jumpForce;
+        [field: SerializeField] public InteractableType Type { get; private set; }
+
+        [Header("Jump")] [SerializeField] private float _jumpForce;
         [SerializeField] private float _jumpDuration;
 
-        [Header("Fall")]
-        [SerializeField] private Transform _rayStart;
+        [Header("Fall")] [SerializeField] private Transform _rayStart;
         [SerializeField] private float _rayFallDistance;
         [SerializeField] private float _maxFallDistance;
         [SerializeField] private float _maxTimerBeforeDestroy;
 
-        [Space(10), Header("References")]
-        [SerializeField] private Rigidbody _rigidbody;
+        [Space(10), Header("References")] [SerializeField]
+        private Rigidbody _rigidbody;
+
         [SerializeField] private LayerMask _tileLayer;
 
         protected bool _isGoingToBreak;
@@ -49,6 +48,7 @@ namespace Interactables
 
                 if (_timer > _maxTimerBeforeDestroy)
                 {
+                    Debug.Log("DEAD");
                     Destroy(gameObject);
                 }
             }
@@ -58,24 +58,55 @@ namespace Interactables
             }
         }
 
-        protected void SetInteractableOnTile()
+        public void SetInteractableOnTile()
         {
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, GameplayManager.Instance.BlockSize / 2, _tileLayer))
             {
                 if (hit.collider.gameObject.TryGetComponent(out TileController tile))
                 {
-                    if (tile.TileState == TileState.Free)
-                    {
-                        transform.position = tile.SpotPositionTransform.position;
+                    HandleInteractOnFreeTile(tile);
+                    HandleInteractOnSpot(tile);
+                    HandleInteractOnInteractable(tile);
+                }
+            }
+        }
 
-                        tile.SetInteractable(this);
-                    }
-                    else if (tile.TileState == TileState.HasASpot)
-                    {
-                        GameplayManager.Instance.CurrentSpot = tile.CurrentSpot;
-                        tile.SetInteractable(this);
+        private void HandleInteractOnFreeTile(TileController tile)
+        {
+            if (tile.TileState == TileState.Free)
+            {
+                transform.position = tile.SpotPositionTransform.position;
 
-                        StartCoroutine(GameplayManager.Instance.Interact(tile.CurrentSpot.CurrentTile, this, GameplayManager.Instance.LastDragPos, false));
+                tile.SetInteractable(this);
+            }
+        }
+
+        private void HandleInteractOnSpot(TileController tile)
+        {
+            if (tile.TileState == TileState.HasASpot)
+            {
+                GameplayManager.Instance.CurrentSpot = tile.CurrentSpot;
+
+                tile.SetInteractable(this);
+
+                StartCoroutine(GameplayManager.Instance.Interact(tile.CurrentSpot.CurrentTile, this, GameplayManager.Instance.LastDragPos, false));
+            }
+        }
+
+        private void HandleInteractOnInteractable(TileController tile)
+        {
+            if (tile.TileState == TileState.HasInteractable)
+            {
+                if (tile.Interactable.Type == InteractableType.Pouffe)
+                {
+                    Debug.Log("There is a pouffe");
+
+                    TileController newTile = tile.GetNeighbour(GameplayManager.Instance.LastDragPos);
+
+                    if (newTile != null)
+                    {
+                        Move(transform.position, newTile.SpotPositionTransform.position);
+                        newTile.SetInteractable(this);
                     }
                 }
             }
@@ -87,7 +118,7 @@ namespace Interactables
             {
                 if (hit.collider.gameObject.TryGetComponent(out TileController tile))
                 {
-                    return hit.distance < _maxFallDistance || tile.TileState == TileState.HasASpot;
+                    return hit.distance < _maxFallDistance || tile.TileState == TileState.HasASpot || (tile.TileState == TileState.HasInteractable && tile.Interactable.Type == InteractableType.Pouffe);
                 }
             }
 
@@ -100,7 +131,7 @@ namespace Interactables
             transform.DOJump(endPos, _jumpForce, 1, _jumpDuration);
         }
 
-        public IEnumerator Destroy()
+        public IEnumerator Fall()
         {
             yield return new WaitForSeconds(_jumpDuration);
 
