@@ -3940,6 +3940,26 @@ PrefabInstance:
       objectReference: {fileID: 1371108450}
     - target: {fileID: 7681961569524641757, guid: 49730f46c3ab7cd44bd8ec20c5228414,
         type: 3}
+      propertyPath: _punchForce.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7681961569524641757, guid: 49730f46c3ab7cd44bd8ec20c5228414,
+        type: 3}
+      propertyPath: _punchForce.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7681961569524641757, guid: 49730f46c3ab7cd44bd8ec20c5228414,
+        type: 3}
+      propertyPath: _punchForce.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7681961569524641757, guid: 49730f46c3ab7cd44bd8ec20c5228414,
+        type: 3}
+      propertyPath: _punchDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7681961569524641757, guid: 49730f46c3ab7cd44bd8ec20c5228414,
+        type: 3}
       propertyPath: _mainMenuSlider
       value: 
       objectReference: {fileID: 1346473807}

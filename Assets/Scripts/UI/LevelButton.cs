@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -14,13 +15,16 @@ namespace UI
         [SerializeField] private TMP_Text _levelName;
 
         private Button _button;
+        private RectTransform _rectTransform;
         
         private void Start()
         {
             string scene = $"Dimension{_dimensionIndex}";
             
             _button = GetComponent<Button>();
-            _button.onClick.AddListener(() => StartCoroutine(UIManager.Instance.GoToScene(scene)));
+            _rectTransform = GetComponent<RectTransform>();
+            
+            _button.onClick.AddListener(ClickOnButton);
 
             _levelName.text = $"Dimension {_dimensionIndex}";
             
@@ -29,6 +33,11 @@ namespace UI
             {
                 _starsImages[i].sprite = _starFullSprite;
             }
+        }
+
+        private void ClickOnButton()
+        {
+            _rectTransform.DOPunchScale(UIManager.Instance.PunchForce, UIManager.Instance.PunchDuration).OnComplete(() => StartCoroutine(UIManager.Instance.GoToScene($"Dimension{_dimensionIndex}")));
         }
     }
 }

@@ -16,6 +16,12 @@ namespace Managers
         
         [Space(8)]
         [SerializeField] private GameObject _levelMenuObj;
+        [SerializeField] private float _punchDuration;
+        [SerializeField] private Vector3 _punchForce;
+
+        public float PunchDuration => _punchDuration;
+
+        public Vector3 PunchForce => _punchForce;
 
         protected override void InternalAwake()
         {
