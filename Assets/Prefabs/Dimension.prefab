@@ -428,6 +428,7 @@ MonoBehaviour:
   - {fileID: 4632096343644268976}
   - {fileID: 4215176933207228160}
   _starFullSprite: {fileID: 21300000, guid: 553a9ccf2a6c51a47971d93c9e6b81df, type: 3}
+  _levelName: {fileID: 847571292710923848}
 --- !u!222 &6894168545903773339
 CanvasRenderer:
   m_ObjectHideFlags: 0

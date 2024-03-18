@@ -2384,11 +2384,11 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 695199119}
   m_HandleRect: {fileID: 977849663}
-  m_Direction: 0
+  m_Direction: 1
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2685,7 +2685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
+  m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1593121727
@@ -3928,6 +3928,11 @@ PrefabInstance:
       propertyPath: _menuObj
       value: 
       objectReference: {fileID: 742168937}
+    - target: {fileID: 7681961569524641757, guid: 49730f46c3ab7cd44bd8ec20c5228414,
+        type: 3}
+      propertyPath: _imageSlider
+      value: 
+      objectReference: {fileID: 977849664}
     - target: {fileID: 7681961569524641757, guid: 49730f46c3ab7cd44bd8ec20c5228414,
         type: 3}
       propertyPath: _levelMenuObj
