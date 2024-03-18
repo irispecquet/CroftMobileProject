@@ -8,7 +8,7 @@ namespace Interactables
         {
             if (_isGoingToBreak)
             {
-                Debug.Log("DEAD");
+                // fonction explosion
                 Destroy(gameObject);
             }
         

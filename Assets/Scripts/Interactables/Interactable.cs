@@ -48,8 +48,12 @@ namespace Interactables
 
                 if (_timer > _maxTimerBeforeDestroy)
                 {
-                    Debug.Log("DEAD");
                     Destroy(gameObject);
+
+                    if (Type == InteractableType.Reactor)
+                    {
+                        // fonction explosion
+                    }
                 }
             }
             else
