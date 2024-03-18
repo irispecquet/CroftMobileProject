@@ -121,6 +121,11 @@ namespace Managers
             StartCoroutine(interactable.Fall());
         }
 
+        public void ReloadScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
         public void GoToNextScene()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
