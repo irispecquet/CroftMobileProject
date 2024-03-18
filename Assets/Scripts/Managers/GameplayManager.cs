@@ -29,7 +29,7 @@ namespace Managers
                 if (newTile.TileState == TileState.Free || newTile.TileState == TileState.HasInteractable)
                 {
                     CurrentSpot.Move(newTile);
-                    
+
                     _scoreManager.UpdateScore(1);
 
                     CurrentTile.CurrentSpot = null;
@@ -72,7 +72,7 @@ namespace Managers
                 {
                     yield break;
                 }
-                
+
                 StartCoroutine(WaitToMoveInteractable(CurrentSpot.PartnerSpot, tile, newTile, interactable, direction));
             }
             else
@@ -129,16 +129,24 @@ namespace Managers
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        public IEnumerator GoToMainMenu()
+        public void LaunchMainMenu(bool finishedLevel)
         {
-            _scoreManager.SetStars();
+            StartCoroutine(GoToMainMenu(finishedLevel));
+        }
+
+        public IEnumerator GoToMainMenu(bool finishedLevel)
+        {
+            if (finishedLevel)
+            {
+                _scoreManager.SetStars();
+            }
 
             // transition ici
-            
+
             float seconds = 0; // temps de transi
             yield return new WaitForSeconds(seconds);
-            
-            SceneManager.LoadScene("MainMenu");
+
+            SceneManager.LoadScene("LevelMenu");
         }
 
         private void OnDrawGizmos()

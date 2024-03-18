@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 
 namespace Interactables
@@ -9,7 +10,8 @@ namespace Interactables
             if (_isGoingToBreak)
             {
                 // fonction explosion
-                Destroy(gameObject);
+                
+                GameplayManager.Instance.ReloadScene();
             }
         
             if (_isGoingToBreak == false && _isFalling)

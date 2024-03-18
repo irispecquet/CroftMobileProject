@@ -53,6 +53,7 @@ namespace Interactables
                     if (Type == InteractableType.Reactor)
                     {
                         // fonction explosion
+                        GameplayManager.Instance.ReloadScene();
                     }
                 }
             }
@@ -91,7 +92,7 @@ namespace Interactables
             {
                 if (tile.CurrentSpot.Type == SpotType.NextLevelTrigger)
                 {
-                    StartCoroutine(GameplayManager.Instance.GoToMainMenu()); 
+                    GameplayManager.Instance.LaunchMainMenu(true);
                     return;
                 }
                 
