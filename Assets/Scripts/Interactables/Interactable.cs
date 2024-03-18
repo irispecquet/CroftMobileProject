@@ -91,7 +91,7 @@ namespace Interactables
             {
                 if (tile.CurrentSpot.Type == SpotType.NextLevelTrigger)
                 {
-                    GameplayManager.Instance.GoToNextScene(); 
+                    StartCoroutine(GameplayManager.Instance.GoToMainMenu()); 
                     return;
                 }
                 

@@ -46,7 +46,7 @@ public class SpotController : MonoBehaviour
     {
         _moveTween?.Kill();
         transform.DOMove(tile.SpotPositionTransform.position, _speed);
-
+        
         CurrentTile.TileState = TileState.Free;
 
         CurrentTile = tile;

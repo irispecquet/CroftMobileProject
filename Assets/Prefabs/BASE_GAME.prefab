@@ -268,7 +268,7 @@ Transform:
   - {fileID: 9138684145392527969}
   - {fileID: 9146938279191760943}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9055090820499102150
 GameObject:
@@ -471,7 +471,7 @@ PrefabInstance:
     - target: {fileID: 5321745745145373284, guid: d41657ee3ebfd32488780d16507b962b,
         type: 3}
       propertyPath: m_Name
-      value: GameplayManager
+      value: Scripts
       objectReference: {fileID: 0}
     - target: {fileID: 6889924509692853385, guid: d41657ee3ebfd32488780d16507b962b,
         type: 3}

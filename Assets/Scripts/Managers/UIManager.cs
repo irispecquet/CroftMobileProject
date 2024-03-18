@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,8 +24,13 @@ namespace Managers
             }
         }
 
-        public void GoToScene(string nameScene)
+        public IEnumerator GoToScene(string nameScene)
         {
+            // mets ta transi ici
+            
+            float seconds = 0; // mets le temps de ton anim
+            yield return new WaitForSeconds(seconds);
+            
             SceneManager.LoadScene(nameScene);
         }
 

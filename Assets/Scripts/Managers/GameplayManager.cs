@@ -13,6 +13,7 @@ namespace Managers
         public float BlockSize => _blockSize;
 
         [SerializeField] private FeedbackManager _feedbackManager;
+        [SerializeField] private ScoreManager _scoreManager;
         [SerializeField] private float _blockSize;
 
         protected override void InternalAwake()
@@ -28,6 +29,8 @@ namespace Managers
                 if (newTile.TileState == TileState.Free || newTile.TileState == TileState.HasInteractable)
                 {
                     CurrentSpot.Move(newTile);
+                    
+                    _scoreManager.UpdateScore(1);
 
                     CurrentTile.CurrentSpot = null;
 
@@ -126,9 +129,16 @@ namespace Managers
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        public void GoToNextScene()
+        public IEnumerator GoToMainMenu()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            _scoreManager.SetStars();
+
+            // transition ici
+            
+            float seconds = 0;
+            yield return new WaitForSeconds(seconds);
+            
+            SceneManager.LoadScene("MainMenu");
         }
 
         private void OnDrawGizmos()
