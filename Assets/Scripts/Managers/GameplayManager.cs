@@ -135,7 +135,7 @@ namespace Managers
 
             // transition ici
             
-            float seconds = 0;
+            float seconds = 0; // temps de transi
             yield return new WaitForSeconds(seconds);
             
             SceneManager.LoadScene("MainMenu");

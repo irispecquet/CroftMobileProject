@@ -70,7 +70,7 @@ namespace Interactables
                 {
                     HandleInteractOnFreeTile(tile);
                     HandleInteractOnSpot(tile);
-                    HandleInteractOnInteractable(tile);
+                    StartCoroutine(HandleInteractOnInteractable(tile));
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace Interactables
             }
         }
 
-        private void HandleInteractOnInteractable(TileController tile)
+        private IEnumerator HandleInteractOnInteractable(TileController tile)
         {
             if (tile.TileState == TileState.HasInteractable)
             {
@@ -114,7 +114,10 @@ namespace Interactables
                     if (newTile != null)
                     {
                         Move(transform.position, newTile.SpotPositionTransform.position);
-                        newTile.SetInteractable(this);
+                        
+                        yield return new WaitForSeconds(GetTweenDuration());
+                        
+                        SetInteractableOnTile();
                     }
                 }
             }
