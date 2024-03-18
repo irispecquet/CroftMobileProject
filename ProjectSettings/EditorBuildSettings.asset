@@ -6,14 +6,26 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Dimension0.unity
-    guid: c850ee8c3b14cc8459e7e186857cf567
-  - enabled: 1
-    path: Assets/Scenes/LevelDesign/Dimension1.unity
-    guid: 1d77998f20d94f84f9bb5083108f60c0
-  - enabled: 1
     path: Assets/Scenes/Menus/MainMenu.unity
     guid: 90d56aa9a7156db46929c6531f942e87
+  - enabled: 1
+    path: Assets/Scenes/LevelDesign/Dimension0.unity
+    guid: 1d77998f20d94f84f9bb5083108f60c0
+  - enabled: 1
+    path: Assets/Scenes/LevelDesign/Dimension1.unity
+    guid: bf71592fcb20f1b4bb2ad57c6bc869a7
+  - enabled: 1
+    path: Assets/Scenes/LevelDesign/Dimension2.unity
+    guid: 17bc713406535b14e9b9af04e9e90308
+  - enabled: 1
+    path: Assets/Scenes/LevelDesign/Dimension3.unity
+    guid: 468c7981f721e3d489d99f3c69ae28e4
+  - enabled: 1
+    path: Assets/Scenes/LevelDesign/Dimension4.unity
+    guid: 01016ed7507598644a076259858945d3
+  - enabled: 1
+    path: Assets/Scenes/LevelDesign/Dimension5.unity
+    guid: 7fdfcd162d89eb748a31373207033614
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 9a2b03562b9c2bc4287a8601098962bf,
       type: 2}
