@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2187815510907219636}
-  m_LocalRotation: {x: -0.1665691, y: 0.35396364, z: 0.08644851, w: 0.9162375}
+  m_LocalRotation: {x: -0.16657203, y: 0.35396424, z: 0.086445525, w: 0.916237}
   m_LocalPosition: {x: -2.99, y: 22.65, z: -5.98}
   m_LocalScale: {x: 3.7689152, y: 0.8324778, z: 1.7614886}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -21.496, y: 41.772, z: 2.494}
 --- !u!33 &5333008996842020000
 MeshFilter:
@@ -104,7 +104,7 @@ VideoPlayer:
   m_AspectRatio: 2
   m_DataSource: 0
   m_TimeUpdateMode: 2
-  m_PlaybackSpeed: 1
+  m_PlaybackSpeed: 0.5
   m_AudioOutputMode: 2
   m_TargetAudioSources:
   - {fileID: 0}
@@ -112,7 +112,7 @@ VideoPlayer:
   - 1
   m_Url: 
   m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
+  m_DirectAudioMutes: 01
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
