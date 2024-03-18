@@ -21,7 +21,7 @@ namespace Managers
             }
 
             _currentTouch = Input.GetTouch(0);
-            
+
             if (_currentTouch.phase == TouchPhase.Began && _isDragging == false)
             {
                 InitDrag();
@@ -51,12 +51,9 @@ namespace Managers
                     {
                         return;
                     }
-                    
-                    if (_gameplayManager.CurrentSpot != spot)
-                    {
-                        _gameplayManager.CurrentSpot = spot;
-                        _gameplayManager.CurrentTile = spot.CurrentTile;
-                    }
+
+                    _gameplayManager.CurrentSpot = spot;
+                    _gameplayManager.CurrentTile = spot.CurrentTile;
 
                     _isDragging = true;
                 }
