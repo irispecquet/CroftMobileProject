@@ -8,8 +8,6 @@ public class SliderController : MonoBehaviour
 {
     [SerializeField] private Slider _mainMenuSlider;
     [SerializeField] private Image _imageSlider;
-    [SerializeField] private GameObject _levelSelection;
-    [SerializeField] private GameObject _self;
 
     public void OpenLevelMenu()
     {
@@ -18,9 +16,7 @@ public class SliderController : MonoBehaviour
 
         if (value <= 0.1f)
         {
-            _levelSelection.SetActive(true);
-            _self.SetActive(false);
-            //SceneManager.LoadScene("FirstMenu"); 
+            SceneManager.LoadScene("LevelsMenu"); 
         }
     }
 }

@@ -37,7 +37,7 @@ namespace UI
 
         private void ClickOnButton()
         {
-            _rectTransform.DOPunchScale(UIManager.Instance.PunchForce, UIManager.Instance.PunchDuration).OnComplete(() => StartCoroutine(UIManager.Instance.GoToScene($"Dimension{_dimensionIndex}")));
+            _rectTransform.DOPunchScale(LevelMenuManager.Instance.PunchForce, LevelMenuManager.Instance.PunchDuration).OnComplete(() => StartCoroutine(LevelMenuManager.Instance.GoToScene($"Dimension{_dimensionIndex}")));
         }
     }
 }

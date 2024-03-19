@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/FirstMenu.unity
     guid: eb5f48b758c88da4fa38be57bd1a06fc
   - enabled: 1
+    path: Assets/Scenes/Menus/LevelsMenu.unity
+    guid: a3d7ac7d12bad7541a8df9bba1d8653a
+  - enabled: 1
     path: Assets/Scenes/LevelDesign/Dimension0.unity
     guid: cc7f5a95981ca0d489d98c34b7b7c9ed
   - enabled: 1
@@ -19,7 +22,7 @@ EditorBuildSettings:
     guid: 9604953ffe380914ba1b586eb4b49d65
   - enabled: 1
     path: Assets/Scenes/LevelDesign/Dimension3.unity
-    guid: ed157b520a991ea4391f9d41b4c22ae4
+    guid: a2d458b07f8a13e4ca556dba28394961
   - enabled: 1
     path: Assets/Scenes/LevelDesign/Dimension4.unity
     guid: 55cc972a341daf84392e42ca62629ae5
@@ -38,8 +41,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelDesign/Dimension9.unity
     guid: 7fdfcd162d89eb748a31373207033614
-  - enabled: 1
-    path: Assets/Scenes/LevelDesign/Dimension10.unity
+  - enabled: 0
+    path: Assets/Scenes/LevelDesign/TestLD.unity
     guid: 468c7981f721e3d489d99f3c69ae28e4
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 9a2b03562b9c2bc4287a8601098962bf,

@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
   <PartnerSpot>k__BackingField: {fileID: 0}
-  _speed: 0.5
+  _speed: 0.7
 --- !u!33 &1983677678168172536
 MeshFilter:
   m_ObjectHideFlags: 0

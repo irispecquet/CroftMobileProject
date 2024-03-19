@@ -146,7 +146,7 @@ namespace Managers
             float seconds = 0; // temps de transi
             yield return new WaitForSeconds(seconds);
 
-            SceneManager.LoadScene("FirstMenu");
+            SceneManager.LoadScene("LevelsMenu");
         }
 
         private void OnDrawGizmos()

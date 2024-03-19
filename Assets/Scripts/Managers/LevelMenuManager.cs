@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Managers
 {
-    public class UIManager : Singleton<UIManager>
+    public class LevelMenuManager : Singleton<LevelMenuManager>
     {
         [Space(8)]
         [SerializeField] private float _punchDuration;
