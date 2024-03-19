@@ -10,6 +10,7 @@ namespace UI
     public class LevelButton : MonoBehaviour
     {
         [SerializeField] private int _dimensionIndex;
+        [SerializeField] private int _starsMin;
         [SerializeField] private Image[] _starsImages;
         [SerializeField] private Sprite _starFullSprite;
         [SerializeField] private TMP_Text _levelName;

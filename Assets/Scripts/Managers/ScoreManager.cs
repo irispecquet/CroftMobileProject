@@ -12,6 +12,11 @@ namespace Managers
 
         private int _starNb;
 
+        private void Start()
+        {
+            Score = 0;
+        }
+
         public void UpdateScore(int value)
         {
             Score += value;
@@ -34,6 +39,9 @@ namespace Managers
             if (_starNb > stars)
             {
                 PlayerPrefs.SetInt($"Dimension{_dimensionIndex}", _starNb);
+                
+                PlayerPrefs.SetInt($"TotalStars", _starNb - stars);
+                Debug.Log(PlayerPrefs.GetInt("TotalStars"));
             }
             
             Debug.Log($"You got {_starNb} stars, with {Score} moves.");
