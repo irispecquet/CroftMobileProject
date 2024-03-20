@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Interactables;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -146,7 +147,15 @@ namespace Managers
             float seconds = 0; // temps de transi
             yield return new WaitForSeconds(seconds);
 
-            SceneManager.LoadScene("LevelsMenu");
+            if (finishedLevel)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+            else
+            {
+                SceneManager.LoadScene("LevelsMenu");
+            }
+
         }
 
         private void OnDrawGizmos()
