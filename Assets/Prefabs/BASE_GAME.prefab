@@ -862,6 +862,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scripts
       objectReference: {fileID: 0}
+    - target: {fileID: 7903976136062675631, guid: d41657ee3ebfd32488780d16507b962b,
+        type: 3}
+      propertyPath: _canvas
+      value: 
+      objectReference: {fileID: 1789141977284072294}
+    - target: {fileID: 7903976136062675631, guid: d41657ee3ebfd32488780d16507b962b,
+        type: 3}
+      propertyPath: _uiImage.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903976136062675631, guid: d41657ee3ebfd32488780d16507b962b,
+        type: 3}
+      propertyPath: _uiObjects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903976136062675631, guid: d41657ee3ebfd32488780d16507b962b,
+        type: 3}
+      propertyPath: _uiImage.Array.data[0]
+      value: 
+      objectReference: {fileID: 8096071781024309569}
+    - target: {fileID: 7903976136062675631, guid: d41657ee3ebfd32488780d16507b962b,
+        type: 3}
+      propertyPath: _uiImage.Array.data[1]
+      value: 
+      objectReference: {fileID: 5297764755733740631}
+    - target: {fileID: 7903976136062675631, guid: d41657ee3ebfd32488780d16507b962b,
+        type: 3}
+      propertyPath: _uiObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 2761441709536171366}
+    - target: {fileID: 7903976136062675631, guid: d41657ee3ebfd32488780d16507b962b,
+        type: 3}
+      propertyPath: _uiObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 1367405617528982899}
     m_RemovedComponents:
     - {fileID: 5724076290144354413, guid: d41657ee3ebfd32488780d16507b962b, type: 3}
     m_RemovedGameObjects: []

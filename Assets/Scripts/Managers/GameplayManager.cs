@@ -25,6 +25,8 @@ namespace Managers
 
         private void Start()
         {
+            ActivateCanvas(false);
+            
             TransitionManager.Instance.TransitionScript.TransitionIn();
         }
 
@@ -139,8 +141,8 @@ namespace Managers
 
         private IEnumerator WaitToReloadScene()
         {
+            ActivateCanvas(false);
             Transitions transi = TransitionManager.Instance.TransitionScript;
-
             transi.TransitionOut();
 
             yield return new WaitForSeconds(transi.FadeTime);
@@ -159,6 +161,8 @@ namespace Managers
             {
                 _scoreManager.SetStars();
             }
+            
+            ActivateCanvas(false);
 
             Transitions transi = TransitionManager.Instance.TransitionScript;
             transi.TransitionOut();
@@ -173,7 +177,11 @@ namespace Managers
             {
                 SceneManager.LoadScene("LevelsMenu");
             }
-
+        }
+        
+        public void ActivateCanvas(bool activate)
+        {
+            _feedbackManager.ActivateCanvas(activate);
         }
 
         private void OnDrawGizmos()

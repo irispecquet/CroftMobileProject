@@ -36,7 +36,7 @@ namespace UI
         
         private void Start()
         {
-            string sceneName = $"PLANÈTE {_dimensionIndex}";
+            string sceneName = $"PLANÈTE {_dimensionIndex + 1}";
             
             _button = GetComponent<Button>();
             _rectTransform = GetComponent<RectTransform>();

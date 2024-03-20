@@ -56,11 +56,13 @@ namespace Managers
                     _gameplayManager.CurrentTile = spot.CurrentTile;
 
                     _isDragging = true;
+                    
+                    GameplayManager.Instance.ActivateCanvas(false);
                 }
             }
             else
             {
-                Debug.Log("Click");
+                GameplayManager.Instance.ActivateCanvas(true);
             }
         }
 
