@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbd7c71428747c3a5935543b617304f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPersistant: 1
+  isPersistant: 0
   <TransitionScript>k__BackingField: {fileID: 1766598318523549476}
 --- !u!1001 &695222140557990248
 PrefabInstance:

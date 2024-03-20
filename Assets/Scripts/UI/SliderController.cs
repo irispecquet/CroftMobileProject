@@ -14,22 +14,11 @@ public class SliderController : MonoBehaviour
     
     public void OpenLevelMenu()
     {
-        StartCoroutine(WaitToOpenLevelMenu());
-    }
-
-    private IEnumerator WaitToOpenLevelMenu()
-    {
         float value = _mainMenuSlider.value;
         // _imageSlider.DOFade(value, 0.1f);
 
         if (value <= 0.1f)
         {
-            Transitions transi = TransitionManager.Instance.TransitionScript;
-            
-            transi.TransitionOut();
-
-            yield return new WaitForSeconds(transi.FadeTime);
-            
             SceneManager.LoadScene("LevelsMenu");
         }
     }
