@@ -9,11 +9,9 @@ namespace Interactables
         {
             if (_isGoingToBreak)
             {
-                // fonction explosion
-                
-                GameplayManager.Instance.ReloadScene();
+                StartCoroutine(TransitionManager.Instance.TransitionScript.Defeat(transform));
             }
-        
+
             if (_isGoingToBreak == false && _isFalling)
             {
                 SetInteractableOnTile();

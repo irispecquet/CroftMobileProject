@@ -47,11 +47,13 @@ namespace Managers
             Debug.Log($"You got {_starNb} stars, with {Score} moves.");
             Debug.Log($"You have {PlayerPrefs.GetInt("TotalStars")} stars in total.");
         }
-        
+
+#if UNITY_EDITOR
         [MenuItem("Custom Menu/ResetPlayerPrefs")]
-        private static void ResetPlayerPrefs() 
+        private static void ResetPlayerPrefs()
         {
             PlayerPrefs.DeleteAll();
         }
+#endif
     }
 }

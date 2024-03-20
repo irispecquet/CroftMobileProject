@@ -79,7 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d17df979469f04c810f7b8b9accc07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stepsToStars: 
+  _stepsToStars: 050000000500000005000000
+  _dimensionIndex: 0
 --- !u!114 &6853110692041395251
 MonoBehaviour:
   m_ObjectHideFlags: 0

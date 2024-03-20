@@ -48,12 +48,9 @@ namespace Interactables
 
                 if (_timer > _maxTimerBeforeDestroy)
                 {
-                    Destroy(gameObject);
-
                     if (Type == InteractableType.Reactor)
                     {
-                        // fonction explosion
-                        GameplayManager.Instance.ReloadScene();
+                        StartCoroutine(TransitionManager.Instance.TransitionScript.Defeat(transform));
                     }
                 }
             }

@@ -13,7 +13,7 @@ public abstract class Singleton<TClass> : MonoBehaviour where TClass : class
         if (Instance != null)
         {
             Debug.LogError($"More than one <b>\"{typeof(TClass).Name}\"</b> singleton in scene.", gameObject);
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
             

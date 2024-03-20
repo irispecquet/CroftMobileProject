@@ -4,57 +4,63 @@ using UnityEngine;
 //using UnityEngine.VFX;
 //using UnityEngine.Rendering.PostProcessing;
 using DG.Tweening;
+using Managers;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 
 public class Transitions : MonoBehaviour
 {
-    public float FadeTime = 1;
-    public float BeamTime = 3;
+    [Header("Timer")]
+    [SerializeField] private float _fadeTime = 1;
+    [SerializeField] private float _beamTime = 3;
 
-    public GameObject BeamFx;
-    public GameObject Fader;
+    [Header("Object")]
+    [SerializeField] private GameObject _beamFx;
+    [SerializeField] private Material _fader;
 
-    public Volume PostPro;
-    private PaniniProjection paniniProj;
+    [Space(10)]
+    [SerializeField] private Volume _postPro;
+    
+    private PaniniProjection _paniniProj;
+    private float _paniniDistance;
+    private float _paniniCrop;
+    
+    private const float FadeMax = 0.55f;
+    private const float FadeMin = -0.3f;
 
-    // Valeurs fixes �a bouge pas
-    float fadeMax = 0.55f;
-    float fadeMin = -0.3f;
-
-    float paniniDistance;
-    float paniniCrop;
+    public float FadeTime => _fadeTime;
 
     private void Awake()
     {
-        PostPro.profile.TryGet(out paniniProj);
+        _postPro.profile.TryGet(out _paniniProj);
 
-        paniniDistance = (float)paniniProj.distance;
-        paniniCrop = (float)paniniProj.cropToFit;
+        _paniniDistance = (float)_paniniProj.distance;
+        _paniniCrop = (float)_paniniProj.cropToFit;
     }
 
     public void TransitionOut()
     {
-        Fader.GetComponent<Material>().DOFloat(fadeMin, "_PowerLevel", FadeTime);
+        _fader.DOFloat(FadeMin, "_PowerLevel", FadeTime);
     }
 
     public void TransitionIn()
     {
-        paniniProj.distance.Override(paniniDistance);
-        Fader.GetComponent<Material>().DOFloat(fadeMax, "_PowerLevel", FadeTime);
+        _paniniProj.distance.Override(_paniniDistance);
+        _fader.DOFloat(FadeMax, "_PowerLevel", FadeTime);
     }
 
-    public IEnumerator Defeat(GameObject reactor) // quand on perd
+    public IEnumerator Defeat(Transform reactor) // quand on perd
     {
-        GameObject beam = Instantiate(BeamFx, reactor.transform);
-        paniniProj.distance.Override(1);
-        yield return new WaitForSeconds(BeamTime);
+        Instantiate(_beamFx, reactor);
+        // _paniniProj.distance.Override(1);
+        
+        yield return new WaitForSeconds(_beamTime);
 
         TransitionOut();
+        
         yield return new WaitForSeconds(FadeTime);
         
-        Destroy(beam);
-        TransitionIn();
+        GameplayManager.Instance.ReloadScene();
     }
 
 }

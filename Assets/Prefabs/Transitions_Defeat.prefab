@@ -32,7 +32,7 @@ Transform:
   - {fileID: 7454705389021017171}
   - {fileID: 6840776994158236745}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3061327661124022205
 GameObject:
@@ -78,11 +78,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5005b7a2077968459f7e34f148e9324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FadeTime: 1
-  BeamTime: 3
-  BeamFx: {fileID: 3538959922342120711, guid: 252921d37913f7c488a65ef85cf92801, type: 3}
-  Fader: {fileID: 338611610844208517}
-  PostPro: {fileID: 9052371094103536922}
+  _fadeTime: 1
+  _beamTime: 1.5
+  _beamFx: {fileID: 3538959922342120711, guid: 252921d37913f7c488a65ef85cf92801, type: 3}
+  _fader: {fileID: 2100000, guid: 9173ef004e8208747aab74321f4da956, type: 2}
+  _postPro: {fileID: 9052371094103536922}
 --- !u!1001 &220330061727829966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -257,12 +257,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87d9e6e1a60f7fd4aa5b3e58fbc282e9, type: 3}
---- !u!1 &338611610844208517 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8142993804822719376, guid: 87d9e6e1a60f7fd4aa5b3e58fbc282e9,
-    type: 3}
-  m_PrefabInstance: {fileID: 8481198181627672085}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4025330471722473756 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4787216947509587721, guid: 87d9e6e1a60f7fd4aa5b3e58fbc282e9,

@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Interactables;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +21,11 @@ namespace Managers
 
         protected override void InternalAwake()
         {
+        }
+
+        private void Start()
+        {
+            TransitionManager.Instance.TransitionScript.TransitionIn();
         }
 
         public void MoveSpot(Vector3 direction)
@@ -142,10 +149,10 @@ namespace Managers
                 _scoreManager.SetStars();
             }
 
-            // transition ici
-
-            float seconds = 0; // temps de transi
-            yield return new WaitForSeconds(seconds);
+            Transitions transi = TransitionManager.Instance.TransitionScript;
+            transi.TransitionOut();
+            
+            yield return new WaitForSeconds(transi.FadeTime);
 
             if (finishedLevel)
             {

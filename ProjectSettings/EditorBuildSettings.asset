@@ -20,9 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelDesign/Dimension2.unity
     guid: 9604953ffe380914ba1b586eb4b49d65
+  - enabled: 0
+    path: Assets/Scenes/LevelDesign/Dimension3.unity
+    guid: 468c7981f721e3d489d99f3c69ae28e4
   - enabled: 1
     path: Assets/Scenes/LevelDesign/Dimension3.unity
-    guid: a2d458b07f8a13e4ca556dba28394961
+    guid: 468c7981f721e3d489d99f3c69ae28e4
   - enabled: 1
     path: Assets/Scenes/LevelDesign/Dimension4.unity
     guid: 55cc972a341daf84392e42ca62629ae5
@@ -41,9 +44,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelDesign/Dimension9.unity
     guid: 7fdfcd162d89eb748a31373207033614
-  - enabled: 0
-    path: Assets/Scenes/LevelDesign/Dimension3.unity
-    guid: 468c7981f721e3d489d99f3c69ae28e4
+  - enabled: 1
+    path: Assets/Scenes/LevelDesign/Dimension10.unity
+    guid: 598484a94fff2c44985c773bcd96e2dc
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 9a2b03562b9c2bc4287a8601098962bf,
       type: 2}
