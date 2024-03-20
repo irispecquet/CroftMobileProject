@@ -58,6 +58,10 @@ namespace Managers
                     _isDragging = true;
                 }
             }
+            else
+            {
+                Debug.Log("Click");
+            }
         }
 
         private void EndDrag()

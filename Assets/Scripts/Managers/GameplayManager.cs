@@ -134,6 +134,17 @@ namespace Managers
 
         public void ReloadScene()
         {
+            StartCoroutine(WaitToReloadScene());
+        }
+
+        private IEnumerator WaitToReloadScene()
+        {
+            Transitions transi = TransitionManager.Instance.TransitionScript;
+
+            transi.TransitionOut();
+
+            yield return new WaitForSeconds(transi.FadeTime);
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -151,7 +162,7 @@ namespace Managers
 
             Transitions transi = TransitionManager.Instance.TransitionScript;
             transi.TransitionOut();
-            
+
             yield return new WaitForSeconds(transi.FadeTime);
 
             if (finishedLevel)
