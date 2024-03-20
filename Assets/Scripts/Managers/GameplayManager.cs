@@ -10,13 +10,14 @@ namespace Managers
 {
     public class GameplayManager : Singleton<GameplayManager>
     {
+        [field: SerializeField] public FeedbackManager FeedbackManager { get; private set; }
+        [field: SerializeField] public ScoreManager ScoreManager { get; private set; }
+        
         public TileController CurrentTile { get; set; }
         public SpotController CurrentSpot { get; set; }
         public Vector3 LastDragPos { get; set; }
         public float BlockSize => _blockSize;
 
-        [SerializeField] private FeedbackManager _feedbackManager;
-        [SerializeField] private ScoreManager _scoreManager;
         [SerializeField] private float _blockSize;
 
         protected override void InternalAwake()
@@ -25,7 +26,8 @@ namespace Managers
 
         private void Start()
         {
-            ActivateCanvas(false);
+            FeedbackManager.ActivateCanvas(false);
+            ScoreManager.ActivateStats(false);
             
             TransitionManager.Instance.TransitionScript.TransitionIn();
         }
@@ -40,7 +42,7 @@ namespace Managers
                 {
                     CurrentSpot.Move(newTile);
 
-                    _scoreManager.UpdateScore(1);
+                    ScoreManager.UpdateScore(1);
 
                     CurrentTile.CurrentSpot = null;
 
@@ -51,12 +53,12 @@ namespace Managers
                 }
                 else
                 {
-                    _feedbackManager.ShakeSpot(CurrentSpot);
+                    FeedbackManager.ShakeSpot(CurrentSpot);
                 }
             }
             else
             {
-                _feedbackManager.ShakeSpot(CurrentSpot);
+                FeedbackManager.ShakeSpot(CurrentSpot);
             }
         }
 
@@ -141,35 +143,21 @@ namespace Managers
 
         private IEnumerator WaitToReloadScene()
         {
-            ActivateCanvas(false);
-            Transitions transi = TransitionManager.Instance.TransitionScript;
-            transi.TransitionOut();
-
-            yield return new WaitForSeconds(transi.FadeTime);
+            yield return ExitScene();
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        public void LaunchMainMenu(bool finishedLevel)
+        public void EndLevel(bool nextLevel)
         {
-            StartCoroutine(GoToMainMenu(finishedLevel));
+            StartCoroutine(WaitToEndLevel(nextLevel));
         }
 
-        public IEnumerator GoToMainMenu(bool finishedLevel)
+        public IEnumerator WaitToEndLevel(bool nextLevel)
         {
-            if (finishedLevel)
-            {
-                _scoreManager.SetStars();
-            }
-            
-            ActivateCanvas(false);
+            yield return ExitScene();
 
-            Transitions transi = TransitionManager.Instance.TransitionScript;
-            transi.TransitionOut();
-
-            yield return new WaitForSeconds(transi.FadeTime);
-
-            if (finishedLevel)
+            if (nextLevel)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
@@ -178,10 +166,16 @@ namespace Managers
                 SceneManager.LoadScene("LevelsMenu");
             }
         }
-        
-        public void ActivateCanvas(bool activate)
+
+        private object ExitScene()
         {
-            _feedbackManager.ActivateCanvas(activate);
+            FeedbackManager.ActivateCanvas(false);
+            ScoreManager.ActivateStats(false);
+
+            Transitions transi = TransitionManager.Instance.TransitionScript;
+            transi.TransitionOut();
+
+            return new WaitForSeconds(transi.FadeTime);
         }
 
         private void OnDrawGizmos()

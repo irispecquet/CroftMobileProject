@@ -89,7 +89,8 @@ namespace Interactables
             {
                 if (tile.CurrentSpot.Type == SpotType.NextLevelTrigger)
                 {
-                    GameplayManager.Instance.LaunchMainMenu(true);
+                    GameplayManager.Instance.ScoreManager.ActivateStats(true);
+                    GameplayManager.Instance.ScoreManager.SetStars();
                     return;
                 }
                 

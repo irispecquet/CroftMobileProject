@@ -15,10 +15,11 @@ namespace UI
         {
             if (_starsMin > 0)
             {
-                _starsMinText.text = _starsMin.ToString();
-
-                bool canBeSelected = PlayerPrefs.GetInt("TotalStars") >= _starsMin;
+                int total = PlayerPrefs.GetInt("TotalStars");
+                bool canBeSelected = total >= _starsMin;
                 
+                _starsMinText.text = $"{total} / {_starsMin}";
+
                 Lock(!canBeSelected);
             }
             else

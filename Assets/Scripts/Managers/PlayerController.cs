@@ -1,3 +1,4 @@
+using Audio;
 using UnityEngine;
 
 namespace Managers
@@ -57,12 +58,12 @@ namespace Managers
 
                     _isDragging = true;
                     
-                    GameplayManager.Instance.ActivateCanvas(false);
+                    GameplayManager.Instance.FeedbackManager.ActivateCanvas(false);
                 }
             }
             else
             {
-                GameplayManager.Instance.ActivateCanvas(true);
+                GameplayManager.Instance.FeedbackManager.ActivateCanvas(true);
             }
         }
 

@@ -1,3 +1,4 @@
+using Audio;
 using DG.Tweening;
 using Managers;
 using UnityEngine;
@@ -44,9 +45,11 @@ public class SpotController : MonoBehaviour
 
     public void Move(TileController tile)
     {
+        AudioManager.Instance.PlaySound("Move");
+        
         _moveTween?.Kill();
         transform.DOMove(tile.SpotPositionTransform.position, _speed);
-        
+
         CurrentTile.TileState = TileState.Free;
 
         CurrentTile = tile;

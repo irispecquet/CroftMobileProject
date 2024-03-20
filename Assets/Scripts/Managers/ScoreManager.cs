@@ -1,6 +1,8 @@
 using System;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -10,6 +12,12 @@ namespace Managers
 
         [SerializeField] private int[] _stepsToStars;
         [SerializeField] private int _dimensionIndex;
+        
+        [Header("End game")]
+        [SerializeField] private GameObject _endGameStats;
+        [SerializeField] private Image[] _endGameStars;
+        [SerializeField] private Sprite _starFullSprite;
+        [SerializeField] private TMP_Text _planetText;
 
         private int _starNb;
 
@@ -21,6 +29,11 @@ namespace Managers
         public void UpdateScore(int value)
         {
             Score += value;
+        }
+
+        public void ActivateStats(bool activate)
+        {
+            _endGameStats.SetActive(activate);
         }
 
         public void SetStars()
@@ -35,6 +48,12 @@ namespace Managers
                 }
             }
 
+            for (int i = 0; i < _starNb; i++)
+            {
+                _endGameStars[i].sprite = _starFullSprite;
+                _planetText.text = $"PLANÈTE {_dimensionIndex + 1}";
+            }
+
             int stars = PlayerPrefs.GetInt($"Dimension{_dimensionIndex}Stars");
 
             if (_starNb > stars)
@@ -43,9 +62,6 @@ namespace Managers
 
                 PlayerPrefs.SetInt($"TotalStars", PlayerPrefs.GetInt($"TotalStars") + (_starNb - stars));
             }
-
-            Debug.Log($"You got {_starNb} stars, with {Score} moves.");
-            Debug.Log($"You have {PlayerPrefs.GetInt("TotalStars")} stars in total.");
         }
 
 #if UNITY_EDITOR

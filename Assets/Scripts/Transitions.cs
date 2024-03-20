@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 //using UnityEngine.VFX;
 //using UnityEngine.Rendering.PostProcessing;
@@ -45,13 +46,15 @@ public class Transitions : MonoBehaviour
 
     public void TransitionIn()
     {
-        _paniniProj.distance.Override(_paniniDistance);
+        // _paniniProj.distance.Override(_paniniDistance);
         _fader.DOFloat(FadeMax, "_PowerLevel", FadeTime);
     }
 
     public IEnumerator Defeat(Transform reactor) // quand on perd
     {
         Instantiate(_beamFx, reactor);
+
+        AudioManager.Instance.PlaySound("Beam");
         // _paniniProj.distance.Override(1);
         
         yield return new WaitForSeconds(_beamTime);
