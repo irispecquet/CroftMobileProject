@@ -24,6 +24,7 @@ namespace Interactables
 
         protected bool _isGoingToBreak;
         protected bool _isFalling;
+        protected bool _isDead;
 
         private float _timer;
 
@@ -42,6 +43,11 @@ namespace Interactables
 
         private void Update()
         {
+            if (_isDead)
+            {
+                return;
+            }
+            
             if (_isFalling)
             {
                 _timer += Time.deltaTime;
@@ -51,7 +57,7 @@ namespace Interactables
                     if (Type == InteractableType.Reactor)
                     {
                         StartCoroutine(TransitionManager.Instance.TransitionScript.Defeat(transform));
-                        _isFalling = false;
+                        _isDead = true;
                     }
                 }
             }

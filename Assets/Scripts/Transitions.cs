@@ -12,8 +12,8 @@ using UnityEngine.Rendering;
 public class Transitions : MonoBehaviour
 {
     [Header("Timer")]
-    [SerializeField] private float _fadeTime = 1;
-    [SerializeField] private float _beamTime = 3;
+    [SerializeField] private float _fadeTime;
+    [SerializeField] private float _beamTime;
 
     [Header("Object")]
     [SerializeField] private GameObject _beamFx;
@@ -46,23 +46,17 @@ public class Transitions : MonoBehaviour
 
     public void TransitionIn()
     {
-        // _paniniProj.distance.Override(_paniniDistance);
         _fader.DOFloat(FadeMax, "_PowerLevel", FadeTime);
     }
 
     public IEnumerator Defeat(Transform reactor)
     {
-        Instantiate(_beamFx, reactor);
+        Instantiate(_beamFx, reactor.position, Quaternion.identity);
 
         AudioManager.Instance.PlaySound("Beam");
-        // _paniniProj.distance.Override(1);
         
         yield return new WaitForSeconds(_beamTime);
 
-        TransitionOut();
-        
-        yield return new WaitForSeconds(FadeTime);
-        
         GameplayManager.Instance.ReloadScene();
     }
 
