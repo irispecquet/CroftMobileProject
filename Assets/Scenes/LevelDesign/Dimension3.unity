@@ -131,26 +131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1103048090}
     m_Modifications:
-    - target: {fileID: 2343585761063424358, guid: abd8486f27ca7474da2d25ace0851b36,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2343585761063424358, guid: abd8486f27ca7474da2d25ace0851b36,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2343585761063424358, guid: abd8486f27ca7474da2d25ace0851b36,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -115.766785
-      objectReference: {fileID: 0}
-    - target: {fileID: 2343585761063424358, guid: abd8486f27ca7474da2d25ace0851b36,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -106.55148
-      objectReference: {fileID: 0}
     - target: {fileID: 5712092291125734364, guid: abd8486f27ca7474da2d25ace0851b36,
         type: 3}
       propertyPath: m_RootOrder
@@ -210,22 +190,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BASE_GAME
-      objectReference: {fileID: 0}
-    - target: {fileID: 8096071781024309569, guid: abd8486f27ca7474da2d25ace0851b36,
-        type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8096071781024309569, guid: abd8486f27ca7474da2d25ace0851b36,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 2cebef0529a7a1e409752fe81809ea6e,
-        type: 3}
-    - target: {fileID: 9055090820499102150, guid: abd8486f27ca7474da2d25ace0851b36,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
