@@ -191,6 +191,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: BASE_GAME
       objectReference: {fileID: 0}
+    - target: {fileID: 8240423803639039443, guid: abd8486f27ca7474da2d25ace0851b36,
+        type: 3}
+      propertyPath: _dimensionIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8240423803639039443, guid: abd8486f27ca7474da2d25ace0851b36,
+        type: 3}
+      propertyPath: _stepsToStars.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8240423803639039443, guid: abd8486f27ca7474da2d25ace0851b36,
+        type: 3}
+      propertyPath: _stepsToStars.Array.data[0]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8240423803639039443, guid: abd8486f27ca7474da2d25ace0851b36,
+        type: 3}
+      propertyPath: _stepsToStars.Array.data[1]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8240423803639039443, guid: abd8486f27ca7474da2d25ace0851b36,
+        type: 3}
+      propertyPath: _stepsToStars.Array.data[2]
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -382,7 +407,7 @@ PrefabInstance:
     - target: {fileID: 8077786167150164067, guid: 59fca9c93d750474680626c01da38b02,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.42935
+      value: 7.4327507
       objectReference: {fileID: 0}
     - target: {fileID: 8077786167150164067, guid: 59fca9c93d750474680626c01da38b02,
         type: 3}
@@ -392,7 +417,7 @@ PrefabInstance:
     - target: {fileID: 8077786167150164067, guid: 59fca9c93d750474680626c01da38b02,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.4497657
+      value: 0.54440784
       objectReference: {fileID: 0}
     - target: {fileID: 8077786167150164067, guid: 59fca9c93d750474680626c01da38b02,
         type: 3}
@@ -796,7 +821,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690026674}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1332,7 +1357,7 @@ PrefabInstance:
     - target: {fileID: 8077786167150164067, guid: 59fca9c93d750474680626c01da38b02,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.550234
+      value: -3.4555922
       objectReference: {fileID: 0}
     - target: {fileID: 8077786167150164067, guid: 59fca9c93d750474680626c01da38b02,
         type: 3}
@@ -2482,7 +2507,7 @@ PrefabInstance:
     - target: {fileID: 7062371475348141657, guid: 2e0e7f3638529fd4cb21e544818863d2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.09
+      value: 13.09
       objectReference: {fileID: 0}
     - target: {fileID: 7062371475348141657, guid: 2e0e7f3638529fd4cb21e544818863d2,
         type: 3}
@@ -2492,7 +2517,7 @@ PrefabInstance:
     - target: {fileID: 7062371475348141657, guid: 2e0e7f3638529fd4cb21e544818863d2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.92
+      value: 0.9200001
       objectReference: {fileID: 0}
     - target: {fileID: 7062371475348141657, guid: 2e0e7f3638529fd4cb21e544818863d2,
         type: 3}

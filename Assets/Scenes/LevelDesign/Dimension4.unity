@@ -2150,6 +2150,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8240423803639039443, guid: abd8486f27ca7474da2d25ace0851b36,
         type: 3}
+      propertyPath: _dimensionIndex
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8240423803639039443, guid: abd8486f27ca7474da2d25ace0851b36,
+        type: 3}
       propertyPath: _stepsToStars.Array.size
       value: 3
       objectReference: {fileID: 0}
