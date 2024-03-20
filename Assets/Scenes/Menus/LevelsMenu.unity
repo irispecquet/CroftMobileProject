@@ -3078,6 +3078,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scroll1
       objectReference: {fileID: 0}
+    - target: {fileID: 4756513543197804482, guid: 6ce0e951a5fac144a9ec955972075371,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5004660956051758193, guid: 6ce0e951a5fac144a9ec955972075371,
         type: 3}
       propertyPath: m_AnchorMax.y

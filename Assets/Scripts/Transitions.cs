@@ -16,7 +16,7 @@ public class Transitions : MonoBehaviour
 
     public PaniniProjection PaniniProj;
 
-    // Valeurs fixes ça bouge pas
+    // Valeurs fixes ï¿½a bouge pas
     float fadeMax = 0.55f;
     float fadeMin = -0.3f;
 
@@ -32,8 +32,6 @@ public class Transitions : MonoBehaviour
     public void TransitionOut()
     {
         Fader.GetComponent<Material>().DOFloat(fadeMin, "_PowerLevel", FadeTime);
-
-        
     }
 
     public void TransitionIn()
@@ -42,7 +40,7 @@ public class Transitions : MonoBehaviour
         Fader.GetComponent<Material>().DOFloat(fadeMax, "_PowerLevel", FadeTime);
     }
 
-    public IEnumerator Defeat(GameObject reactor)
+    public IEnumerator Defeat(GameObject reactor) // quand on perd
     {
         GameObject beam = Instantiate(BeamFx, reactor.transform);
         PaniniProj.distance.Override(1);
