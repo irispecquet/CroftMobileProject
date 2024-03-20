@@ -9,8 +9,9 @@ namespace UI
 {
     public class LevelButton : MonoBehaviour
     {
+        public bool CanBeSelected { get; set; }
+        
         [SerializeField] private int _dimensionIndex;
-        [SerializeField] private int _starsMin;
         [SerializeField] private Image[] _starsImages;
         [SerializeField] private Sprite _starFullSprite;
         [SerializeField] private TMP_Text _levelName;
@@ -38,6 +39,11 @@ namespace UI
 
         private void ClickOnButton()
         {
+            if (CanBeSelected == false)
+            {
+                return;
+            }
+            
             _rectTransform.DOPunchScale(LevelMenuManager.Instance.PunchForce, LevelMenuManager.Instance.PunchDuration).OnComplete(() => StartCoroutine(LevelMenuManager.Instance.GoToScene($"Dimension{_dimensionIndex}")));
         }
     }
