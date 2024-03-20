@@ -50,7 +50,7 @@ public class Transitions : MonoBehaviour
         _fader.DOFloat(FadeMax, "_PowerLevel", FadeTime);
     }
 
-    public IEnumerator Defeat(Transform reactor) // quand on perd
+    public IEnumerator Defeat(Transform reactor)
     {
         Instantiate(_beamFx, reactor);
 

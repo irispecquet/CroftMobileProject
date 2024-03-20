@@ -51,6 +51,7 @@ namespace Interactables
                     if (Type == InteractableType.Reactor)
                     {
                         StartCoroutine(TransitionManager.Instance.TransitionScript.Defeat(transform));
+                        _isFalling = false;
                     }
                 }
             }
