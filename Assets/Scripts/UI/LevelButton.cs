@@ -36,14 +36,14 @@ namespace UI
         
         private void Start()
         {
-            string scene = $"Dimension{_dimensionIndex}";
+            string sceneName = $"PLANÈTE {_dimensionIndex}";
             
             _button = GetComponent<Button>();
             _rectTransform = GetComponent<RectTransform>();
             
             _button.onClick.AddListener(ClickOnButton);
 
-            _levelName.text = scene;
+            _levelName.text = sceneName;
             
             int stars = PlayerPrefs.GetInt($"Dimension{_dimensionIndex}Stars");
             for (int i = 0; i < stars; i++)
