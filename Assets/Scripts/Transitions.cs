@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.VFX;
-using UnityEngine.Rendering.PostProcessing;
+//using UnityEngine.VFX;
+//using UnityEngine.Rendering.PostProcessing;
 using DG.Tweening;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
 
 public class Transitions : MonoBehaviour
 {
@@ -14,9 +15,10 @@ public class Transitions : MonoBehaviour
     public GameObject BeamFx;
     public GameObject Fader;
 
-    public PaniniProjection PaniniProj;
+    public Volume PostPro;
+    private PaniniProjection paniniProj;
 
-    // Valeurs fixes ça bouge pas
+    // Valeurs fixes ï¿½a bouge pas
     float fadeMax = 0.55f;
     float fadeMin = -0.3f;
 
@@ -25,27 +27,27 @@ public class Transitions : MonoBehaviour
 
     private void Awake()
     {
-        paniniDistance = (float)PaniniProj.distance;
-        paniniCrop = (float)PaniniProj.cropToFit;
+        PostPro.profile.TryGet(out paniniProj);
+
+        paniniDistance = (float)paniniProj.distance;
+        paniniCrop = (float)paniniProj.cropToFit;
     }
 
     public void TransitionOut()
     {
         Fader.GetComponent<Material>().DOFloat(fadeMin, "_PowerLevel", FadeTime);
-
-        
     }
 
     public void TransitionIn()
     {
-        PaniniProj.distance.Override(paniniDistance);
+        paniniProj.distance.Override(paniniDistance);
         Fader.GetComponent<Material>().DOFloat(fadeMax, "_PowerLevel", FadeTime);
     }
 
-    public IEnumerator Defeat(GameObject reactor)
+    public IEnumerator Defeat(GameObject reactor) // quand on perd
     {
         GameObject beam = Instantiate(BeamFx, reactor.transform);
-        PaniniProj.distance.Override(1);
+        paniniProj.distance.Override(1);
         yield return new WaitForSeconds(BeamTime);
 
         TransitionOut();

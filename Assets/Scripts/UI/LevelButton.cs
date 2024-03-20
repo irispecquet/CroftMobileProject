@@ -9,12 +9,27 @@ namespace UI
 {
     public class LevelButton : MonoBehaviour
     {
-        public bool CanBeSelected { get; set; }
+        public bool CanBeSelected
+        {
+            get => _canBeSelected;
+            set
+            {
+                _canBeSelected = value;
+                _dimensionImage.sprite = _canBeSelected ? _unlockedSprite : _lockedSprite;
+            }
+        }
+
+        private bool _canBeSelected;
         
-        [SerializeField] private int _dimensionIndex;
+        [Header("References")]
         [SerializeField] private Image[] _starsImages;
-        [SerializeField] private Sprite _starFullSprite;
+        [SerializeField] private Image _dimensionImage;
         [SerializeField] private TMP_Text _levelName;
+        [Space(10), Header("Values")]
+        [SerializeField] private int _dimensionIndex;
+        [SerializeField] private Sprite _lockedSprite;
+        [SerializeField] private Sprite _unlockedSprite;
+        [SerializeField] private Sprite _starFullSprite;
 
         private Button _button;
         private RectTransform _rectTransform;
@@ -28,9 +43,9 @@ namespace UI
             
             _button.onClick.AddListener(ClickOnButton);
 
-            _levelName.text = $"Dimension {_dimensionIndex}";
+            _levelName.text = scene;
             
-            int stars = PlayerPrefs.GetInt(scene);
+            int stars = PlayerPrefs.GetInt($"Dimension{_dimensionIndex}Stars");
             for (int i = 0; i < stars; i++)
             {
                 _starsImages[i].sprite = _starFullSprite;
