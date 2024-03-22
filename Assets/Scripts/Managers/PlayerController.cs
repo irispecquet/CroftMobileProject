@@ -37,13 +37,6 @@ namespace Managers
                 EndDrag();
             }
 #elif UNITY_WEBGL
-            if (Input.touchCount == 0)
-            {
-                return;
-            }
-
-            _currentTouch = Input.GetTouch(0);
-
             if (Input.GetMouseButtonDown(0) && _isDragging == false)
             {
                 InitDrag();
