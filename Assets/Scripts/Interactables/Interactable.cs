@@ -47,7 +47,7 @@ namespace Interactables
             {
                 return;
             }
-            
+
             if (_isFalling)
             {
                 _timer += Time.deltaTime;
@@ -73,6 +73,8 @@ namespace Interactables
             {
                 if (hit.collider.gameObject.TryGetComponent(out TileController tile))
                 {
+                    _rigidbody.isKinematic = true;
+
                     HandleInteractOnFreeTile(tile);
                     HandleInteractOnSpot(tile);
                     StartCoroutine(HandleInteractOnInteractable(tile));
@@ -96,11 +98,14 @@ namespace Interactables
             {
                 if (tile.CurrentSpot.Type == SpotType.NextLevelTrigger)
                 {
-                    GameplayManager.Instance.ScoreManager.ActivateStats(true);
-                    GameplayManager.Instance.ScoreManager.SetStars();
-                    return;
+                    if (Type == InteractableType.Reactor)
+                    {
+                        GameplayManager.Instance.ScoreManager.ActivateStats(true);
+                        GameplayManager.Instance.ScoreManager.SetStars();
+                        return;
+                    }
                 }
-                
+
                 GameplayManager.Instance.CurrentSpot = tile.CurrentSpot;
 
                 tile.SetInteractable(this);
@@ -120,9 +125,9 @@ namespace Interactables
                     if (newTile != null)
                     {
                         Move(transform.position, newTile.SpotPositionTransform.position);
-                        
+
                         yield return new WaitForSeconds(GetTweenDuration());
-                        
+
                         SetInteractableOnTile();
                     }
                 }

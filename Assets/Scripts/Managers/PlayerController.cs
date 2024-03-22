@@ -16,6 +16,7 @@ namespace Managers
 
         void Update()
         {
+#if UNITY_ANDROID
             if (Input.touchCount == 0)
             {
                 return;
@@ -29,12 +30,33 @@ namespace Managers
             }
             else if (_currentTouch.phase == TouchPhase.Moved && _isDragging)
             {
-                _currentMousePosition = Input.mousePosition;
+                _currentMousePosition = _currentTouch.position;
             }
             else if (_currentTouch.phase == TouchPhase.Ended && _isDragging)
             {
                 EndDrag();
             }
+#elif UNITY_WEBGL
+            if (Input.touchCount == 0)
+            {
+                return;
+            }
+
+            _currentTouch = Input.GetTouch(0);
+
+            if (Input.GetMouseButtonDown(0) && _isDragging == false)
+            {
+                InitDrag();
+            }
+            else if (Input.GetMouseButton(0) && _isDragging)
+            {
+                _currentMousePosition = Input.mousePosition;
+            }
+            else if (Input.GetMouseButtonUp(0) && _isDragging)
+            {
+                EndDrag();
+            }
+#endif
         }
 
         private void InitDrag()
@@ -57,7 +79,7 @@ namespace Managers
                     _gameplayManager.CurrentTile = spot.CurrentTile;
 
                     _isDragging = true;
-                    
+
                     GameplayManager.Instance.FeedbackManager.ActivateCanvas(false);
                 }
             }
